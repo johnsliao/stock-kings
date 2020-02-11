@@ -8,6 +8,7 @@ Buston University Term Project - CS673 - Team 5
 
 ## Setup
 1. Clone this repository `git clone https://github.com/johnsliao/cs673-team-5.git`
-2. `cd app`
-3. `yarn start`
-4. You will see the application running on `http://localhost:3000/`
+2. `yarn install`
+3. `cd app`
+4. `yarn start`
+5. You will see the application running on `http://localhost:3000/`
