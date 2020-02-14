@@ -2,6 +2,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.2",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.42",
     "react-router-dom": "^5.1.2"
   }
 }
