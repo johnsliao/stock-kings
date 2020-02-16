@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import StockPicker from "./StockPicker"
+import StockPicker from "./StockPicker";
 
-const bank = 500
+const bank = 500;
 
-class Dashboard extends Component {
+class Main extends Component {
   render() {
     return (
       <div>
-        <h2>Dashboard Page</h2>
+        <h2>Main Page</h2>
         <h3>Bank ${bank}</h3>
         <StockPicker />
       </div>
@@ -15,4 +15,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default Main;

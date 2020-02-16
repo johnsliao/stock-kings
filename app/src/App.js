@@ -1,8 +1,15 @@
 import React from "react";
-import MenuAppBar from "./components/MenuAppBar.js";
-import Dashboard from "./components/Dashboard.js";
-import Home from "./components/Home.js";
-import Settings from "./components/Settings.js";
+import {
+  Home,
+  Register,
+  Main,
+  Profile,
+  Portfolio,
+  Competition,
+  Chat,
+  Bug,
+  MenuAppBar
+} from "./components";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -12,8 +19,13 @@ function App() {
       <MenuAppBar />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/settings" component={Settings} />
+        <Route path="/register" component={Register} />
+        <Route path="/main" component={Main} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/portfolio" component={Portfolio} />
+        <Route path="/competition" component={Competition} />
+        <Route path="/chat" component={Chat} />
+        <Route path="/bug" component={Bug} />
       </Switch>
     </div>
   );

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-class Settings extends Component {
+class Profile extends Component {
   render() {
     return (
       <div>
-        <h2>Settings Page</h2>
+        <h2>User Profile Page</h2>
       </div>
     );
   }
 }
 
-export default Settings;
+export default Profile;
