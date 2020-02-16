@@ -5,7 +5,6 @@ import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
-import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
@@ -56,44 +55,46 @@ export default function MenuAppBar() {
       >
         <div className={classes.toolbar} />
         <List>
-          <ListItem button component="a" href="/" button>
+          <ListItem button component="a" href="/">
             <ListItemIcon />
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component="a" href="/main" button>
+          <ListItem button component="a" href="/main">
             <ListItemIcon />
             <ListItemText primary="Main" />
           </ListItem>
-          <ListItem button component="a" href="/portfolio" button>
+          <ListItem button component="a" href="/portfolio">
             <ListItemIcon />
             <ListItemText primary="Portfolio" />
           </ListItem>
-          <ListItem button component="a" href="/competition" button>
+          <ListItem button component="a" href="/competition">
             <ListItemIcon />
             <ListItemText primary="Competition" />
           </ListItem>
-          <ListItem button component="a" href="/chat" button>
+          <ListItem button component="a" href="/chat">
             <ListItemIcon />
             <ListItemText primary="Chat" />
           </ListItem>
         </List>
         <Divider />
         <List>
-          <ListItem button component="a" href="/profile" button>
+          <ListItem button component="a" href="/profile">
             <ListItemIcon />
             <ListItemText primary="Profile" />
           </ListItem>
-          <ListItem button component="a" href="/bug" button>
+          <ListItem button component="a" href="/bug">
             <ListItemIcon />
             <ListItemText primary="Report Bug" />
           </ListItem>
-          <ListItem button component="a" href="/register" button>
+          <ListItem button component="a" href="/register">
             <ListItemIcon />
             <ListItemText primary="Register" />
           </ListItem>
         </List>
       </Drawer>
-      <main className={classes.content}></main>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+      </main>
     </div>
   );
 }
