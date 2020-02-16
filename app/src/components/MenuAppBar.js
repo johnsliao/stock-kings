@@ -10,6 +10,16 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+
+import HomeIcon from "@material-ui/icons/Home";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import ChatIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
+import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
+import BugReportIcon from "@material-ui/icons/BugReport";
+import BuildIcon from "@material-ui/icons/Build";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -56,38 +66,54 @@ export default function MenuAppBar() {
         <div className={classes.toolbar} />
         <List>
           <ListItem button component="a" href="/">
-            <ListItemIcon />
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component="a" href="/main">
-            <ListItemIcon />
-            <ListItemText primary="Main" />
+          <ListItem button component="a" href="/trade">
+            <ListItemIcon>
+              <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Trade" />
           </ListItem>
           <ListItem button component="a" href="/portfolio">
-            <ListItemIcon />
+            <ListItemIcon>
+              <AccountBalanceIcon />
+            </ListItemIcon>
             <ListItemText primary="Portfolio" />
           </ListItem>
           <ListItem button component="a" href="/competition">
-            <ListItemIcon />
+            <ListItemIcon>
+              <EmojiPeopleIcon />
+            </ListItemIcon>
             <ListItemText primary="Competition" />
           </ListItem>
           <ListItem button component="a" href="/chat">
-            <ListItemIcon />
+            <ListItemIcon>
+              <ChatIcon />
+            </ListItemIcon>
             <ListItemText primary="Chat" />
           </ListItem>
         </List>
         <Divider />
         <List>
           <ListItem button component="a" href="/profile">
-            <ListItemIcon />
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
           <ListItem button component="a" href="/bug">
-            <ListItemIcon />
+            <ListItemIcon>
+              <BugReportIcon />
+            </ListItemIcon>
             <ListItemText primary="Report Bug" />
           </ListItem>
           <ListItem button component="a" href="/register">
-            <ListItemIcon />
+            <ListItemIcon>
+              <BuildIcon />
+            </ListItemIcon>
             <ListItemText primary="Register" />
           </ListItem>
         </List>

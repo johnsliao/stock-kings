@@ -1,34 +1,52 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Home,
   Register,
-  Main,
+  Trade,
   Profile,
   Portfolio,
   Competition,
   Chat,
-  Bug,
-  MenuAppBar
+  Bug
 } from "./components";
+import MenuAppBar from "./components/MenuAppBar";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <MenuAppBar />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/register" component={Register} />
-        <Route path="/main" component={Main} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/portfolio" component={Portfolio} />
-        <Route path="/competition" component={Competition} />
-        <Route path="/chat" component={Chat} />
-        <Route path="/bug" component={Bug} />
-      </Switch>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bank: 500
+    };
+  }
+
+  setBank = value => {
+    this.setState({ bank: value.toFixed(2) });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <MenuAppBar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/register" component={Register} />
+          <Route
+            path="/trade"
+            component={() => (
+              <Trade bank={this.state.bank} setBank={this.setBank} />
+            )}
+          />
+          <Route path="/profile" component={Profile} />
+          <Route path="/portfolio" component={Portfolio} />
+          <Route path="/competition" component={Competition} />
+          <Route path="/chat" component={Chat} />
+          <Route path="/bug" component={Bug} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

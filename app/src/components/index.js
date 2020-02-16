@@ -7,4 +7,4 @@ export { default as Bug } from "./Bug.js";
 export { default as Register } from "./Register.js";
 export { default as StockPicker } from "./StockPicker.js";
 export { default as MenuAppBar } from "./MenuAppBar.js";
-export { default as Main } from "./Main.js";
+export { default as Trade } from "./Trade.js";

@@ -1,62 +1,85 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import MaterialTable from "material-table";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: 140,
-    width: 100
-  },
-  button: {}
-}));
-
-export default function StockPicker() {
-  const classes = useStyles();
-
-  return (
-    <Grid container className={classes.root}>
-      <Grid
-        container
-        item
-        spacing={4}
-        xs={12}
-        justify="center"
-        alignItems="center"
-      >
-        <Grid item>
-          <Autocomplete
-            id="search"
-            options={sampleStocks}
-            getOptionLabel={option => option.stock + " $" + option.price}
-            style={{ width: 300 }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label="Search"
-                variant="outlined"
-                fullWidth
-              />
-            )}
-          />
-        </Grid>
-        <Grid item>
-          <Button className={classes.button}>Buy</Button>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const sampleStocks = [
-  { stock: "APPLE", price: 50 },
-  { stock: "YAHOO", price: 75 },
-  { stock: "NVIDIA", price: 100 }
-];
+class StockPicker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      columns: [
+        { title: "Symbol", field: "symbol" },
+        { title: "Stock", field: "stock" },
+        { title: "Price", field: "price" }
+      ],
+      data: [
+        { stock: "Yahoo", symbol: "YAHOO", price: 25.12 },
+        { stock: "Google", symbol: "GOOG", price: 35.42 },
+        { stock: "Apple", symbol: "AAPL", price: 199.29 }
+      ]
+    };
+  }
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ open: false });
+  };
+
+  checkBank = amount => {
+    if (this.props.bank - amount < 0) {
+      this.setState({ open: true });
+      return false;
+    }
+    return true;
+  };
+
+  render() {
+    return (
+      <Grid container justify="center">
+        <Grid item xs={8}>
+          {this.state.bank}
+          <MaterialTable
+            title="Stocks"
+            columns={this.state.columns}
+            data={this.state.data}
+            style={{ padding: "20px" }}
+            options={{
+              paging: false,
+              headerStyle: { position: "sticky", top: 0 }
+            }}
+            actions={[
+              {
+                icon: "add",
+                tooltip: "Buy Stock",
+                onClick: (event, rowData) => {
+                  if (this.checkBank(rowData.price)) {
+                    this.props.setBank(this.props.bank - rowData.price);
+                  }
+                }
+              }
+            ]}
+          />
+        </Grid>
+        <Snackbar
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+        >
+          <Alert onClose={this.handleClose} severity="error">
+            Insufficient funds to purchase this stock
+          </Alert>
+        </Snackbar>
+      </Grid>
+    );
+  }
+}
+
+export default StockPicker;
