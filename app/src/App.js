@@ -39,7 +39,12 @@ class App extends Component {
             )}
           />
           <Route path="/profile" component={Profile} />
-          <Route path="/portfolio" component={Portfolio} />
+          <Route
+            path="/portfolio"
+            component={() => (
+              <Portfolio bank={this.state.bank} setBank={this.setBank} />
+            )}
+          />
           <Route path="/competition" component={Competition} />
           <Route path="/chat" component={Chat} />
           <Route path="/bug" component={Bug} />
