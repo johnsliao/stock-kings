@@ -53,9 +53,9 @@ class StockPortfolio extends Component {
                 icon: "remove",
                 tooltip: "Sell Stock",
                 onClick: (event, rowData) => {
-                  if (this.checkBank(rowData.price)) {
-                    this.props.setBank(this.props.bank - rowData.price);
-                  }
+                  // if (this.checkBank(rowData.price)) {
+                  //   this.props.setBank(this.props.bank - rowData.price);
+                  // }
                 }
               }
             ]}
