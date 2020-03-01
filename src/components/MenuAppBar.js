@@ -82,7 +82,7 @@ export default function MenuAppBar() {
             <ListItemIcon>
               <AccountBalanceIcon />
             </ListItemIcon>
-            <ListItemText primary="Portfolio" />
+            <ListItemText primary="My Portfolio" />
           </ListItem>
           <ListItem button component="a" href="/competition">
             <ListItemIcon>

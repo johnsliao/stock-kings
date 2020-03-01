@@ -69,6 +69,7 @@ class Bug extends Component {
         >
           <Grid item>
             <Typography variant="h4">Need to report a bug?</Typography>
+            <br />
             <Typography paragraph>
               We are here for you. Please send us information on any issues or
               concerns you may have.
