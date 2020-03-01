@@ -7,7 +7,8 @@ import {
   Portfolio,
   Competition,
   Chat,
-  Bug
+  Bug,
+  SearchFriends
 } from "./components";
 import MenuAppBar from "./components/MenuAppBar";
 import { Switch, Route } from "react-router-dom";
@@ -45,6 +46,7 @@ class App extends Component {
               <Portfolio bank={this.state.bank} setBank={this.setBank} />
             )}
           />
+          <Route path="/search-friends" component={SearchFriends} />
           <Route path="/competition" component={Competition} />
           <Route path="/chat" component={Chat} />
           <Route path="/bug" component={Bug} />

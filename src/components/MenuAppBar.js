@@ -19,6 +19,7 @@ import ChatIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
 import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import BuildIcon from "@material-ui/icons/Build";
+import SearchIcon from "@material-ui/icons/Search";
 
 const drawerWidth = 240;
 
@@ -94,6 +95,12 @@ export default function MenuAppBar() {
               <ChatIcon />
             </ListItemIcon>
             <ListItemText primary="Chat" />
+          </ListItem>
+          <ListItem button component="a" href="/search-friends">
+            <ListItemIcon>
+              <SearchIcon />
+            </ListItemIcon>
+            <ListItemText primary="Search Friends" />
           </ListItem>
         </List>
         <Divider />

@@ -8,3 +8,4 @@ export { default as Register } from "./Register.js";
 export { default as StockPicker } from "./StockPicker.js";
 export { default as MenuAppBar } from "./MenuAppBar.js";
 export { default as Trade } from "./Trade.js";
+export { default as SearchFriends } from "./SearchFriends.js";
