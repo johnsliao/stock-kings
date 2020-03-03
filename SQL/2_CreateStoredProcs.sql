@@ -5,7 +5,8 @@ BEGIN
   	Select `UserID`
   	from useraccount
   	where Username = usernameVar
-  	and Password = passwordVar;
+  	and Password = passwordVar
+  	and END_DATE IS NULL;
   	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
 END$$
 DELIMITER ;
@@ -95,6 +96,18 @@ BEGIN
 	END IF;
 
 
+  	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
+END$$
+DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateUser`( IN usernameVar varchar(30), passwordVar char(100), emailVar varchar(80))
+BEGIN
+ 	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
+	INSERT INTO `useraccount` (username, password, emailaddress, BuyingPower)
+	VALUES (usernameVar, passwordVar, emailVar, 2000); 	
   	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
 END$$
 DELIMITER ;
