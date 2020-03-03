@@ -10,7 +10,6 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 import HomeIcon from "@material-ui/icons/Home";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
@@ -21,6 +20,7 @@ import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import BuildIcon from "@material-ui/icons/Build";
 import SearchIcon from "@material-ui/icons/Search";
+import LoginIcon from "@material-ui/icons/CheckBox";
 
 const drawerWidth = 240;
 
@@ -123,6 +123,12 @@ export default function MenuAppBar() {
               <BuildIcon />
             </ListItemIcon>
             <ListItemText primary="Register" />
+          </ListItem>
+          <ListItem button component="a" href="/login">
+            <ListItemIcon>
+              <LoginIcon />
+            </ListItemIcon>
+            <ListItemText primary="Login" />
           </ListItem>
         </List>
       </Drawer>
