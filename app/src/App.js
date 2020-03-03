@@ -21,7 +21,7 @@ class App extends Component {
       accounts: []
     };
 
-    fetch('http://localhost:4001/getAccounts')
+    fetch('http://localhost:4000/getAccounts')
     .then(response => response.json()
     .then(
       (result) => {
