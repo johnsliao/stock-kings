@@ -17,8 +17,23 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bank: 500
+      bank: 500,
+      accounts: []
     };
+
+    fetch('http://localhost:4001/getAccounts')
+    .then(response => response.json()
+    .then(
+      (result) => {
+         this.setState({accounts : result})
+
+         console.log(this.accounts);
+
+       }),
+       (error) => {
+         console.log(error);
+       });
+
   }
 
   setBank = value => {
@@ -49,9 +64,20 @@ class App extends Component {
           <Route path="/chat" component={Chat} />
           <Route path="/bug" component={Bug} />
         </Switch>
+
+        Hello World
+        <ul>
+          {this.state.accounts.map(account => <li>
+            <h2>{account.userId}: {account.username}</h2>
+            <p>{account.buyingpower}</p>
+          </li>)}
+        </ul>
       </div>
+
     );
   }
 }
+
+
 
 export default App;
