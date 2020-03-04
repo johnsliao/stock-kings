@@ -39,21 +39,21 @@ class Chat extends Component {
       <div>
         <h2>Profile</h2>
         <h3>
-          Username: {localValue.username}
+          Username: {localValue.username}<br/>
           <input
             type="text"
             name="username"
             placeholder="change username"
             onChange={this.changeInputValue}
           /><br/>
-          Email: {localValue.email}
+          Email: {localValue.email}<br/>
           <input
             type="text"
             name="email"
             placeholder="change email"
             onChange={this.changeInputValue}
           /><br/>
-          Phone: {localValue.phone}
+          Phone: {localValue.phone}<br/>
           <input
             type="text"
             name="phone"
