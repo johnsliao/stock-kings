@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   Home,
+  Login,
   Register,
   Trade,
   Profile,
@@ -50,6 +51,7 @@ class App extends Component {
           <Route path="/competition" component={Competition} />
           <Route path="/chat" component={Chat} />
           <Route path="/bug" component={Bug} />
+          <Route path="/Login" component={Login} />
         </Switch>
       </div>
     );
