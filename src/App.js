@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Home,
+  Announcement,
   Login,
   Register,
   Trade,
@@ -32,7 +32,7 @@ class App extends Component {
       <div className="App">
         <MenuAppBar />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Announcement} />
           <Route path="/register" component={Register} />
           <Route
             path="/trade"

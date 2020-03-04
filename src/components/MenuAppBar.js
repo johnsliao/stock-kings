@@ -20,7 +20,7 @@ import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import BuildIcon from "@material-ui/icons/Build";
 import SearchIcon from "@material-ui/icons/Search";
-import LoginIcon from "@material-ui/icons/CheckBox";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const drawerWidth = 240;
 
@@ -71,7 +71,7 @@ export default function MenuAppBar() {
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Home" />
+            <ListItemText primary="Announcement" />
           </ListItem>
           <ListItem button component="a" href="/trade">
             <ListItemIcon>
@@ -126,7 +126,7 @@ export default function MenuAppBar() {
           </ListItem>
           <ListItem button component="a" href="/login">
             <ListItemIcon>
-              <LoginIcon />
+              <CheckBoxIcon />
             </ListItemIcon>
             <ListItemText primary="Login" />
           </ListItem>
