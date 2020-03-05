@@ -31,6 +31,12 @@ function RegisterButton(props) {
   return <Button className={classes.root} {...other} />;
 }
 
+function CancelButton(props) {
+  const { color, ...other } = props;
+  const classes = useStyles(props);
+  return <Button className={classes.root} {...other} />;
+}
+
 RegisterButton.propTypes = {
   color: PropTypes.oneOf(['blue', 'red']).isRequired,
 };
@@ -40,47 +46,51 @@ class Register extends Component {
     return (
       <div>
         <h2>Register Page</h2>
-        <TextField id="outlined-size-normal"
+        <TextField id="RegisterTextField"
                    label="UserName"
                    variant="outlined"
                    style={{minWidth: "300px", maxWidth: "300px"}}
+                   //defaultValue="Tom"
                    helperText="Letters & Numbers recommended"
         />
         <div>
         </div>
-        <TextField id="outlined-secondary"
+        <TextField id="RegisterTextField"
                    label="Email"
                    variant="outlined"
                    style={{minWidth: "300px", maxWidth: "300px"}}
+                   //defaultValue="Tom2020@bu.edu"
                    helperText="Email is used to recover your account"
         />
         <div>
         </div>
-        <TextField id="filled-password-input"
+        <TextField id="RegisterTextField"
                    label="Password"
                    type="password"
                    autoComplete="current-password"
                    variant="filled"
                    style={{minWidth: "300px", maxWidth: "300px"}}
+                   //defaultValue="12345678"
                    helperText="Use 8 or more characters with a mix of letters, numbers & symbols"
         />
         <div>
         </div>
-        <TextField id="filled-password-input"
+        <TextField id="RegisterTextField"
                    label="Confirm"
                    type="password"
                    autoComplete="current-password"
                    variant="filled"
                    style={{minWidth: "300px", maxWidth: "300px"}}
+                   //defaultValue="12345678"
                    helperText="Re-enter your Password"
         />
         <div>
         </div>
-        <RegisterButton color="red"
+        <CancelButton   color="red"
                         style={{minWidth: "140px", maxWidth: "140px"}}
         >
         Cancel
-        </RegisterButton>
+        </CancelButton>
         <RegisterButton color="blue"
                         style={{minWidth: "140px", maxWidth: "140px"}}
         >
