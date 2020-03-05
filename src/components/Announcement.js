@@ -52,27 +52,29 @@ class Announcement extends Component {
         <Grid container justify="center">
           <Grid item xs={6}>
             <MaterialTable
+              title="Stock Kings"
+              columns={this.state.columns2}
+              data={this.state.data2}
+              style={{ padding: "20px" }}
+              options={{
+                paging: 5,
+                headerStyle: { position: "sticky", top: 0 }
+              }}
+            />
+          </Grid>
+        </Grid>
+
+        <h2> </h2>
+
+        <Grid container justify="center">
+          <Grid item xs={6}>
+            <MaterialTable
               title="Change log"
               columns={this.state.columns1}
               data={this.state.data1}
               style={{ padding: "20px" }}
               options={{
                 paging: false,
-                headerStyle: { position: "sticky", top: 0 }
-              }}
-            />
-          </Grid>
-        </Grid>
-        <h2> </h2>
-        <Grid container justify="center">
-          <Grid item xs={6}>
-            <MaterialTable
-              title="Competition Winners"
-              columns={this.state.columns2}
-              data={this.state.data2}
-              style={{ padding: "20px" }}
-              options={{
-                paging: 5,
                 headerStyle: { position: "sticky", top: 0 }
               }}
             />
