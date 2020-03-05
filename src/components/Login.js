@@ -8,7 +8,8 @@ class Login extends Component {
     let LoggedIn = false
     this.state ={
       username:'',
-      password:''
+      password:'',
+      alert:''
       
     }
     this.onChange = this.onChange.bind(this)
@@ -45,8 +46,6 @@ class Login extends Component {
           <button type="submit" class="loginbtn">Login</button>
           <button type="button" class="cacelbtn">Cancel</button>
         </div>
-
-
         </form>
       </div>
         
