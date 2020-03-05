@@ -13,7 +13,8 @@ class Login extends Component {
     super(props);
     this.state ={
       username:'',
-      password:''
+      password:'',
+      alert:''
       
     };
     this.onChange = this.onChange.bind(this);
@@ -47,7 +48,6 @@ class Login extends Component {
     return (
       <div>
         <h2>Login Page</h2>
-        <form onSumbmit={this.submitForm}>
           <input type="text" placeholder="username" name="username" value={this.state.username} onChange={this.onChange} />
           <br/>
           <input type="password" placeholder="password" name="password" value={this.state.password} onChange={this.onChange} />
@@ -55,8 +55,6 @@ class Login extends Component {
           <div class="col-xs-8">
             <input type="checkbox" name="remember" id="remember"/> Remember me
           </div>
-
-          <div class="clearfix">
             <Button onClick={this.handlecancel} variant="outlined">Cancel</Button>
 
             <Button onClick={this.handlelogin} variant="outlined">Login</Button>
@@ -69,9 +67,7 @@ class Login extends Component {
                 Log in successfully!
               </Alert>
             </Snackbar>
-          </div>
-        </form>
-      </div>
+        </div>
         
     );
   }
