@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import { TextField, Button } from '@material-ui/core'
 
 const localValue = {
   username: "Zihao",
@@ -40,28 +41,33 @@ class Chat extends Component {
         <h2>Profile</h2>
         <h3>
           Username: {localValue.username}<br/>
-          <input
+          <TextField
             type="text"
             name="username"
-            placeholder="change username"
+            label="Change Username"
+            placeholder="New Username"
             onChange={this.changeInputValue}
           /><br/>
           Email: {localValue.email}<br/>
-          <input
+          <TextField
             type="text"
             name="email"
-            placeholder="change email"
+            label="Change Email"
+            placeholder="New Email"
             onChange={this.changeInputValue}
           /><br/>
           Phone: {localValue.phone}<br/>
-          <input
+          <TextField
             type="text"
             name="phone"
-            placeholder="change phone"
+            label="Change Phone"
+            placeholder="New Phone"
             onChange={this.changeInputValue}
           /><br/>
         </h3>
-        <button onClick={this.submitValue}>update</button>
+        <Button onClick={this.submitValue}
+                variant="outlined"
+        >update</Button>
 
       </div>
     )
