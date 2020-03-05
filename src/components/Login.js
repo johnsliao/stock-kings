@@ -1,47 +1,55 @@
 import React, { Component } from "react";
-
+import Button from '@material-ui/core/Button';
 
 class Login extends Component {
 
   constructor(props){
     super(props);
+    let LoggedIn = false
     this.state ={
       username:'',
       password:''
+      
     }
-    this.login = this.login.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.submitForm = this.submitForm.bind(this);
   }
 
-  login() {
-    console.log("Login function"); 
+  onChange(e) {
+    this.setState({
+        [e.target.name] : e.target.value
+    })
   }
 
-  onChange() {
-    console.log("Login function");
-
+  submitForm(e){
+    e.preventDefault()
+    const { username, password } = this.state
+    // login magic
   }
 
   
   render() {
     return (
-      <div className="row small-up-2 medium-up-3 large-up-4">
-      <div className="column bodypart"></div>
+      <div>
         <h2>Login Page</h2>
-        <div><label>Username</label>
-        <input type="text" name="username" placeholder="username" onChange={this.onChange}></input></div>
-        <div><label>Password</label>
-        <input type="password" name="password" placeholder="password"></input>
-        <iput type="sumbit" value="Login" className="button" onClick={this.login}></iput></div>
-        <div style={{height:'10%'}}><label>Remember me</label>
-        <input type="checkbox" checked="checked" name="remember"></input>
-        </div>
+        <form onSumbmit={this.submitForm}>
+          <input type="text" placeholder="username" name="username" value={this.state.username} onChange={this.onChange} />
+          <br/>
+          <input type="password" placeholder="password" name="password" value={this.state.password} onChange={this.onChange} />
+          <br/>
+          <div class="col-xs-8">
+            <input type="checkbox" name="remember" id="remember"/> Remember me
+          </div>
 
-        <div class="clearfix">
+          <div class="clearfix">
           <button type="submit" class="loginbtn">Login</button>
           <button type="button" class="cacelbtn">Cancel</button>
         </div>
+
+
+        </form>
       </div>
+        
     );
   }
 }
