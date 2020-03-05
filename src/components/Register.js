@@ -3,25 +3,37 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core'
 import { styled } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
-const MyButton = styled(Button)({
-  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-  border: 0,
-  borderRadius: 3,
-  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  color: 'white',
-  height: 48,
-  padding: '0 30px',
+
+const useStyles = makeStyles({
+  root: {
+    background: props =>
+      props.color === 'red'
+        ? 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+        : 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: props =>
+      props.color === 'red'
+        ? '0 3px 5px 2px rgba(255, 105, 135, .3)'
+        : '0 3px 5px 2px rgba(33, 203, 243, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    margin: 8,
+  },
 });
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: 200,
-    },
-  },
-}));
+function RegisterButton(props) {
+  const { color, ...other } = props;
+  const classes = useStyles(props);
+  return <Button className={classes.root} {...other} />;
+}
+
+RegisterButton.propTypes = {
+  color: PropTypes.oneOf(['blue', 'red']).isRequired,
+};
 
 class Register extends Component {
   render() {
@@ -31,12 +43,16 @@ class Register extends Component {
         <TextField id="outlined-size-normal"
                    label="UserName"
                    variant="outlined"
+                   style={{minWidth: "300px", maxWidth: "300px"}}
+                   helperText="Letters & Numbers recommended"
         />
         <div>
         </div>
         <TextField id="outlined-secondary"
                    label="Email"
                    variant="outlined"
+                   style={{minWidth: "300px", maxWidth: "300px"}}
+                   helperText="Email is used to recover your account"
         />
         <div>
         </div>
@@ -45,6 +61,8 @@ class Register extends Component {
                    type="password"
                    autoComplete="current-password"
                    variant="filled"
+                   style={{minWidth: "300px", maxWidth: "300px"}}
+                   helperText="Use 8 or more characters with a mix of letters, numbers & symbols"
         />
         <div>
         </div>
@@ -53,10 +71,21 @@ class Register extends Component {
                    type="password"
                    autoComplete="current-password"
                    variant="filled"
+                   style={{minWidth: "300px", maxWidth: "300px"}}
+                   helperText="Re-enter your Password"
         />
         <div>
         </div>
-        <MyButton>Next</MyButton>
+        <RegisterButton color="red"
+                        style={{minWidth: "140px", maxWidth: "140px"}}
+        >
+        Cancel
+        </RegisterButton>
+        <RegisterButton color="blue"
+                        style={{minWidth: "140px", maxWidth: "140px"}}
+        >
+        Next
+        </RegisterButton>
       </div>
     );
   }
