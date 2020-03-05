@@ -1,5 +1,7 @@
 import React, { Component} from 'react';
 import { TextField, Button } from '@material-ui/core'
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const localValue = {
   username: "Zihao",
@@ -7,7 +9,11 @@ const localValue = {
   phone: "8574138570",
 };
 
-class Chat extends Component {
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +39,15 @@ class Chat extends Component {
         });}
       else {localValue[k] = this.state[k];}
     }
+    this.setState({ open: true, description: "" });
   }
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ open: false });
+  };
 
   render() {
     return (
@@ -67,10 +81,20 @@ class Chat extends Component {
         </h3>
         <Button onClick={this.submitValue}
                 variant="outlined"
-        >update</Button>
+        >update
+        </Button>
+        <Snackbar
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+        >
+          <Alert onClose={this.handleClose} severity="success">
+            Your information has been updated successfully!
+          </Alert>
+        </Snackbar>
 
       </div>
     )
   }
 }
-export default Chat;
+export default Profile;

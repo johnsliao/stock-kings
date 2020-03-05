@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 import Button from '@material-ui/core/Button';
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class Login extends Component {
 
   constructor(props){
     super(props);
-    let LoggedIn = false
     this.state ={
       username:'',
       password:''
       
-    }
-    this.onChange = this.onChange.bind(this)
+    };
+    this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.handlelogin = this.handlelogin.bind(this);
   }
 
   onChange(e) {
@@ -22,12 +28,21 @@ class Login extends Component {
   }
 
   submitForm(e){
-    e.preventDefault()
-    const { username, password } = this.state
+    e.preventDefault();
     // login magic
   }
 
-  
+  handlelogin() {
+    this.setState({ open: true, description: "" });
+  }
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ open: false });
+  };
+
   render() {
     return (
       <div>
@@ -42,11 +57,19 @@ class Login extends Component {
           </div>
 
           <div class="clearfix">
-          <button type="submit" class="loginbtn">Login</button>
-          <button type="button" class="cacelbtn">Cancel</button>
-        </div>
+            <Button onClick={this.handlecancel} variant="outlined">Cancel</Button>
 
-
+            <Button onClick={this.handlelogin} variant="outlined">Login</Button>
+            <Snackbar
+              open={this.state.open}
+              autoHideDuration={6000}
+              onClose={this.handleClose}
+            >
+              <Alert onClose={this.handleClose} severity="success">
+                Log in successfully!
+              </Alert>
+            </Snackbar>
+          </div>
         </form>
       </div>
         
