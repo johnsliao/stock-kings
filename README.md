@@ -1,5 +1,5 @@
 # Stock Kings
-## Stock Kings is hosted on [Heroku](http://stock-kings.herokuapp.com/)!
+### Stock Kings is hosted on [Heroku](http://stock-kings.herokuapp.com/)!
 
 Boston University Term Project - CS673 - Team 5 
 
