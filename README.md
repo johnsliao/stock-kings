@@ -5,6 +5,23 @@ Boston University Term Project - CS673 - Team 5
 
 All changes pushed to `master` are automatically deployed on Heroku.
 
+## BLUF
+### Problem Space
+- It’s recommend for people to invest as early as they can, but aren’t sure where to start
+- Investing in the stock market can be risky
+- Current stock simulator apps are not engaging
+
+### Solution
+- Risk-free stock simulator trading application
+- Simple and intuitive
+- Social and engaging
+
+### How
+- Agile methodology
+- Modern version control (git)
+- Continuous integration/Continuous development (CI/CD)
+- Collaborative balanced-team approach
+
 ## Background 
 
 This project is the term-long project for CS673 - Software Engineering and Boston University. 
