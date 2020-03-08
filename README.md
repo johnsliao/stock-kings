@@ -63,18 +63,17 @@ The following are functional requirements that are "nice" to haves.
 - [Microsoft Visual Studio Code](https://code.visualstudio.com/)
 - [npm](https://www.npmjs.com/get-npm)
 - [MySQL](https://dev.mysql.com/downloads/mysql/)
+- [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 - [MAMP](https://www.mamp.info/en/downloads/)
+- Yarn
 
 ## Setup
 
-The following are rough steps on how to get your environment set up to run the application locally:
-
-```
-brew update
-brew install yarn
-```
-
 1. Clone this repository `git clone https://github.com/johnsliao/cs673-team-5.git`
 2. `yarn install`
-3. `yarn start`
-4. You will see the application running on `http://localhost:3000/`
+3. Install MYSQL 8.0.19 with `root` as username and `password` as password
+4. Connect to the database using MySQL Workbench
+5. Run `1_stockkings_CreateDB.sql` to seed data
+6. `yarn start:all` will start front end and backend server
+7. Verify that front end is running on `http://localhost:3000`
+8. Verify that back end is running on `http://localhost:4000/getAccounts`
