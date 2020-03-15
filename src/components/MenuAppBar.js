@@ -54,7 +54,7 @@ const MenuAppBar = props => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Stock Kings {props.username} ? "Logged in as " {props.username} : ""
+            Stock Kings - Logged in as {props.username}
           </Typography>
         </Toolbar>
       </AppBar>

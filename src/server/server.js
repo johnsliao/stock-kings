@@ -48,6 +48,22 @@ app.get("/getAccounts", function(req, res) {
   });
 });
 
+app.get("/getAccountByUsername/:username", function(req, res) {
+  let query =
+    "SELECT userId, username, buyingpower FROM `useraccount` where username='" +
+    req.params.username +
+    "'"; // query database to get all the accounts
+
+  // execute query
+  db.query(query, (err, result) => {
+    if (err) {
+      res.send(":");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
 // set the app to listen on the port
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);

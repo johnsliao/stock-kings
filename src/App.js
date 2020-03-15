@@ -20,8 +20,19 @@ class App extends Component {
     super(props);
     this.state = {
       bank: 500,
+      accounts: [],
       username: undefined
     };
+
+    fetch("http://localhost:4000/getAccountByUsername/ralph").then(
+      response =>
+        response.json().then(result => {
+          console.log("Username is " + result);
+        }),
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   setBank = value => {
@@ -31,7 +42,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MenuAppBar username={this.state.username} />
+        <MenuAppBar username={"FakeName"} />
         <Switch>
           <Route exact path="/" component={Announcement} />
           <Route path="/register" component={Register} />
