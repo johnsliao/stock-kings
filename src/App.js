@@ -19,7 +19,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bank: 500
+      bank: 500,
+      username: undefined
     };
   }
 
@@ -30,7 +31,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MenuAppBar />
+        <MenuAppBar username={this.state.username} />
         <Switch>
           <Route exact path="/" component={Announcement} />
           <Route path="/register" component={Register} />

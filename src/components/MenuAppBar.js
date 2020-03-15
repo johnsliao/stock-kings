@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-export default function MenuAppBar() {
+const MenuAppBar = props => {
   const classes = useStyles();
 
   return (
@@ -54,7 +54,7 @@ export default function MenuAppBar() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Stock Kings
+            Stock Kings {props.username} ? "Logged in as " {props.username} : ""
           </Typography>
         </Toolbar>
       </AppBar>
@@ -137,4 +137,6 @@ export default function MenuAppBar() {
       </main>
     </div>
   );
-}
+};
+
+export default MenuAppBar;
