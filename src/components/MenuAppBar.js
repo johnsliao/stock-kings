@@ -53,8 +53,11 @@ const MenuAppBar = props => {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            Stock Kings - Logged in as {props.username}
+          <Typography variant="h4">Stock Kings</Typography>
+          <Typography variant="subtitle1">
+            {"username" in props.account
+              ? `logged in as ${props.account.username}`
+              : ""}
           </Typography>
         </Toolbar>
       </AppBar>

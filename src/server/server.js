@@ -64,6 +64,25 @@ app.get("/getAccountByUsername/:username", function(req, res) {
   });
 });
 
+app.post("/updateBuyingPower/", function(req, res) {
+  console.log(req.body.username);
+  let query =
+    "UPDATE `useraccount` SET `buyingpower`=" +
+    req.body.value +
+    " where username='" +
+    req.body.username +
+    "'";
+
+  // execute query
+  db.query(query, (err, result) => {
+    if (err) {
+      res.send(":");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
 // set the app to listen on the port
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);

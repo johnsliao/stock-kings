@@ -19,15 +19,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bank: 500,
-      accounts: [],
-      username: undefined
+      account: {}
     };
 
     fetch("http://localhost:4000/getAccountByUsername/ralph").then(
       response =>
         response.json().then(result => {
-          console.log("Username is " + result);
+          this.setState({ account: result[0] });
         }),
       error => {
         console.log(error);
@@ -36,27 +34,43 @@ class App extends Component {
   }
 
   setBank = value => {
-    this.setState({ bank: value.toFixed(2) });
+    this.setState({
+      account: {
+        buyingpower: value.toFixed(2)
+      }
+    });
+
+    fetch("http://localhost:4000/updateBuyingPower/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: "ralph",
+        value: value
+      })
+    });
   };
 
   render() {
     return (
       <div className="App">
-        <MenuAppBar username={"FakeName"} />
+        <MenuAppBar account={this.state.account} />
         <Switch>
           <Route exact path="/" component={Announcement} />
           <Route path="/register" component={Register} />
           <Route
             path="/trade"
             component={() => (
-              <Trade bank={this.state.bank} setBank={this.setBank} />
+              <Trade account={this.state.account} setBank={this.setBank} />
             )}
           />
           <Route path="/profile" component={Profile} />
           <Route
             path="/portfolio"
             component={() => (
-              <Portfolio bank={this.state.bank} setBank={this.setBank} />
+              <Portfolio account={this.state.account} setBank={this.setBank} />
             )}
           />
           <Route path="/search-friends" component={SearchFriends} />

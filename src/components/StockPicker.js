@@ -34,7 +34,7 @@ class StockPicker extends Component {
   };
 
   checkBank = amount => {
-    if (this.props.bank - amount < 0) {
+    if (this.props.account.buyingpower - amount < 0) {
       this.setState({ open: true });
       return false;
     }
@@ -61,7 +61,9 @@ class StockPicker extends Component {
                 tooltip: "Buy Stock",
                 onClick: (event, rowData) => {
                   if (this.checkBank(rowData.price)) {
-                    this.props.setBank(this.props.bank - rowData.price);
+                    this.props.setBank(
+                      parseInt(this.props.account.buyingpower) - rowData.price
+                    );
                   }
                 }
               }
