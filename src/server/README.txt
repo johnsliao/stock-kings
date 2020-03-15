@@ -1,6 +1,6 @@
 1. Clone NodeDBApp folder
 
-2. npm install
+2. npm init
 
 3. npm install mysql
 
