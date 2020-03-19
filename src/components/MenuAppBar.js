@@ -20,7 +20,7 @@ import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import BuildIcon from "@material-ui/icons/Build";
 import SearchIcon from "@material-ui/icons/Search";
-import LoginIcon from "@material-ui/icons/CheckBox";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const drawerWidth = 240;
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-export default function MenuAppBar() {
+const MenuAppBar = props => {
   const classes = useStyles();
 
   return (
@@ -53,8 +53,11 @@ export default function MenuAppBar() {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            Stock Kings
+          <Typography variant="h4">Stock Kings</Typography>
+          <Typography variant="subtitle1">
+            {"username" in props.account
+              ? `logged in as ${props.account.username}`
+              : ""}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -71,7 +74,7 @@ export default function MenuAppBar() {
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Home" />
+            <ListItemText primary="Announcement" />
           </ListItem>
           <ListItem button component="a" href="/trade">
             <ListItemIcon>
@@ -126,7 +129,7 @@ export default function MenuAppBar() {
           </ListItem>
           <ListItem button component="a" href="/login">
             <ListItemIcon>
-              <LoginIcon />
+              <CheckBoxIcon />
             </ListItemIcon>
             <ListItemText primary="Login" />
           </ListItem>
@@ -137,4 +140,6 @@ export default function MenuAppBar() {
       </main>
     </div>
   );
-}
+};
+
+export default MenuAppBar;

@@ -33,12 +33,17 @@ class StockPortfolio extends Component {
       ]
     };
   }
-
+  checkBank = amount => {
+    if (this.props.account.buyingpower - amount < 0) {
+      this.setState({ open: true });
+      return false;
+    }
+    return true;
+  };
   render() {
     return (
       <Grid container justify="center">
         <Grid item xs={8}>
-          {this.state.bank}
           <MaterialTable
             title="Your Stock Portfolio"
             columns={this.state.columns}
@@ -53,9 +58,11 @@ class StockPortfolio extends Component {
                 icon: "remove",
                 tooltip: "Sell Stock",
                 onClick: (event, rowData) => {
-                  // if (this.checkBank(rowData.price)) {
-                  //   this.props.setBank(this.props.bank - rowData.price);
-                  // }
+                  if (this.checkBank(rowData.price)) {
+                    this.props.setBank(
+                      parseInt(this.props.account.buyingpower) + rowData.price
+                    );
+                  }
                 }
               }
             ]}

@@ -1,4 +1,4 @@
-export { default as Home } from "./Home.js";
+export { default as Announcement } from "./Announcement.js";
 export { default as Chat } from "./Chat.js";
 export { default as Competition } from "./Competition.js";
 export { default as Portfolio } from "./Portfolio.js";

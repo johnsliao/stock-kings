@@ -5,8 +5,11 @@ class Portfolio extends Component {
     return (
       <div>
         <h2>Portfolio page</h2>
-        <h2>Bank ${this.props.bank}</h2>
-        <StockPortfolio bank={this.props.bank} setBank={this.props.setBank} />
+        <h2>Bank ${this.props.account.buyingpower}</h2>
+        <StockPortfolio
+          account={this.props.account}
+          setBank={this.props.setBank}
+        />
       </div>
     );
   }

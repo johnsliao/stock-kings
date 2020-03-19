@@ -6,8 +6,11 @@ class Trade extends Component {
     return (
       <div>
         <h2>Trading page</h2>
-        <h2>Bank ${this.props.bank}</h2>
-        <StockPicker bank={this.props.bank} setBank={this.props.setBank} />
+        <h2>Bank ${this.props.account.buyingpower}</h2>
+        <StockPicker
+          account={this.props.account}
+          setBank={this.props.setBank}
+        />
       </div>
     );
   }
