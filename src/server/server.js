@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public"))); // configure express to
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password",
+  password: "root",
   database: "stockkings"
 });
 
@@ -35,8 +35,14 @@ db.connect(err => {
 });
 global.db = db;
 
-app.get("/getAccounts", function(req, res) {
-  let query = "SELECT userId, username, buyingpower FROM `useraccount`"; // query database to get all the accounts
+//get method to retrive account info based on username and encrypted password 
+app.get("/getAccountWithProc", function(req, res) {
+
+  console.log(req.query);
+  let username = req.query.username;
+  let password  = req.query.password;
+
+  let query = "CALL `GetUser`('" + username + "','" + password + "');"; // query database to get all the accounts
 
   // execute query
   db.query(query, (err, result) => {
@@ -72,6 +78,67 @@ app.post("/updateBuyingPower/", function(req, res) {
     " where username='" +
     req.body.username +
     "'";
+
+  // execute query
+  db.query(query, (err, result) => {
+    if (err) {
+      res.send(":");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+//post method to retrive account info based on username and encrypted password 
+app.post("/updateBuyingPowerWithProc/", function(req, res) {
+
+  console.log(req.body);
+  let userId = req.body.userId;
+  let buyingPower = req.body.value;
+
+  let query = "CALL `UpdateBuyingPower`(" + userId + ", " + buyingPower  +");";
+
+  // execute query
+  db.query(query, (err, result) => {
+    if (err) {
+      res.send(":");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+
+//post method to retrive account info based on username and encrypted password 
+app.post("/createUser/", function(req, res) {
+  
+  console.log(req.body);
+  let username = req.body.username;
+  let password = req.body.password;
+  let email = req.body.email;
+
+  let query = "CALL `CreateUser`('"+ username +"', '" + password + "', '" + email + "');";
+
+  // execute query
+  db.query(query, (err, result) => {
+    if (err) {
+      res.send(":");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+//post method to retrive account info based on username and encrypted password 
+app.post("/becomeFriends/", function(req, res) {
+  console.log(req.body);
+
+  let userIdOne = req.body.userIdOne;
+  let userIdTwo = req.body.userIdTwo;
+
+  console.log(req.body.userIdTwo);
+
+  let query = "CALL `CreateFriendshipRecord`("+ userIdOne + "," + userIdTwo + ");";
 
   // execute query
   db.query(query, (err, result) => {
