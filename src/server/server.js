@@ -105,7 +105,7 @@ app.post("/updateBuyingPower/", function(req, res) {
 });
 
 app.post("/buyStock/", function(req, res) {
-  const query = `INSERT INTO \`transactions\` (\`UserAccountID\`, \`PurchasePrice\`, \`ShortName\`, \`Symbol\`) VALUES (${req.body.userId}, ${req.body.marketPrice}, "${req.body.shortName}", "${req.body.symbol}")`;
+  const query = `INSERT INTO \`transactions\` (\`UserAccountID\`, \`PurchasePrice\`, \`ShortName\`, \`Symbol\`, \`Type\`) VALUES (${req.body.userId}, ${req.body.marketPrice}, "${req.body.shortName}", "${req.body.symbol}", "${req.body.type}")`;
   console.log("Query is " + query);
   db.query(query, (err, result) => {
     if (err) {

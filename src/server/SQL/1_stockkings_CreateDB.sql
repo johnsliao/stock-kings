@@ -131,6 +131,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `PurchasePrice` decimal(10,0) NOT NULL,
   `ShortName` varchar(50) NOT NULL,
   `Symbol` varchar(10) NOT NULL,
+  `Type` varchar(50) NOT NULL,
   `PURCHASE_DATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`TransactionID`),
   KEY `userIDForeignKeyTransactions` (`UserAccountID`)
@@ -140,13 +141,15 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
-(1, 3, '99.25', 'FakeGoogle', 'FAKE_GOOG', '2020-02-20 19:12:54');
-INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
-(2, 3, '100.55', 'FakeGoogle', 'FAKE_GOOG', '2020-02-20 19:13:54');
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `TYPE`, `PURCHASE_DATE`) VALUES
+(1, 3, '50', 'Sample_Google', 'SAMPLE_GOOG', 'BUY', '2020-02-20 19:12:54');
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `TYPE`, `PURCHASE_DATE`) VALUES
+(2, 3, '100', 'Sample_Google', 'SAMPLE_GOOG', 'BUY', '2020-02-21 19:13:54');
 
-INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
-(5, 3, '1', 'FakeEnron', 'FAKE_ENRON', '2020-02-21 21:15:54');
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `TYPE`, `PURCHASE_DATE`) VALUES
+(3, 3, '100', 'Sample_Enron', 'SAMPLE_ENRON', 'BUY', '2020-02-25 19:13:54');
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `TYPE`, `PURCHASE_DATE`) VALUES
+(4, 3, '1', 'Sample_Enron', 'SAMPLE_ENRON', 'SELL', '2020-03-01 21:15:54');
 
 
 -- --------------------------------------------------------

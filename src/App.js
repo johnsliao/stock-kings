@@ -105,7 +105,8 @@ class App extends Component {
         userId: this.state.account.userId,
         marketPrice: stockObj.marketPrice,
         shortName: stockObj.shortName,
-        symbol: stockObj.symbol
+        symbol: stockObj.symbol,
+        type: stockObj.type
       })
     });
   };

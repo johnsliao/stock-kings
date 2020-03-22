@@ -11,6 +11,7 @@ class Trade extends Component {
           account={this.props.account}
           setBank={this.props.setBank}
           buyStock={this.props.buyStock}
+          transactions={this.props.transactions}
         />
       </div>
     );

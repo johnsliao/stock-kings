@@ -67,7 +67,8 @@ class StockPicker extends Component {
                     this.props.buyStock({
                       marketPrice: rowData.price,
                       shortName: rowData.stock,
-                      symbol: rowData.symbol
+                      symbol: rowData.symbol,
+                      type: "BUY"
                     });
                   }
                 }
