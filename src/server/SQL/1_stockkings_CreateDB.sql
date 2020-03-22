@@ -28,6 +28,7 @@ DROP TABLE IF EXISTS FRIENDSHIP;
 DROP TABLE IF EXISTS PORTFOLIO;
 DROP TABLE IF EXISTS STOCKNAMESLOOKUP;
 DROP TABLE IF EXISTS USERACCOUNT;
+DROP TABLE IF EXISTS TRANSACTIONS;
 
 -- --------------------------------------------------------
 
@@ -119,6 +120,28 @@ INSERT INTO `useraccount` (`UserID`, `Username`, `Password`, `EmailAddress`, `Bu
 (3, 'zimei', 'value-3', 'value-4', '2000', '2020-02-13 18:46:49', '2020-02-13 18:46:49', NULL),
 (4, 'ralph', 'value-3', 'value-4', '2000', '2020-02-20 18:39:29', '2020-02-20 18:39:29', NULL),
 (5, 'marko', 'value-3', 'value-4', '2000', '2020-02-20 18:39:36', '2020-03-05 18:06:42', NULL);
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `TransactionID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserAccountID` int(11) NOT NULL,
+  `PurchasePrice` decimal(10,0) NOT NULL,
+  `ShortName` varchar(50) NOT NULL,
+  `Symbol` varchar(10) NOT NULL,
+  `PURCHASE_DATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`TransactionID`),
+  KEY `userIDForeignKeyTransactions` (`UserAccountID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transactions`
+--
+
+-- --------------------------------------------------------
+
 
 --
 -- Constraints for dumped tables
