@@ -20,7 +20,8 @@ class App extends Component {
     super(props);
     this.state = {
       account: {},
-      stocks: []
+      stocks: [],
+      transactions: []
     };
 
     fetch("http://localhost:4000/getAccountByUsername/zimei")
@@ -42,6 +43,20 @@ class App extends Component {
             response.json().then(result => {
               console.log(result);
               this.setState({ stocks: result });
+            }),
+          error => {
+            console.log(error);
+          }
+        );
+      })
+      .then(() => {
+        fetch(
+          `http://localhost:4000/getTransactionsByUsernameId/${this.state.account.userId}`
+        ).then(
+          response =>
+            response.json().then(result => {
+              console.log(result);
+              this.setState({ transactions: result });
             }),
           error => {
             console.log(error);
@@ -71,12 +86,12 @@ class App extends Component {
     });
   };
 
-  buyStock = stock => {
-    let newStocks = this.state.stocks;
-    newStocks.push(stock);
+  buyStock = stockObj => {
+    let newTransactions = this.state.transactions;
+    newTransactions.push(stockObj);
     this.setState({
       stocks: {
-        stocks: newStocks
+        transactions: newTransactions
       }
     });
 
@@ -87,11 +102,10 @@ class App extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: this.state.account.username,
         userId: this.state.account.userId,
-        marketPrice: stock.marketPrice,
-        shortName: stock.shortName,
-        symbol: stock.symbol
+        marketPrice: stockObj.marketPrice,
+        shortName: stockObj.shortName,
+        symbol: stockObj.symbol
       })
     });
   };
@@ -106,7 +120,11 @@ class App extends Component {
           <Route
             path="/trade"
             component={() => (
-              <Trade account={this.state.account} setBank={this.setBank} />
+              <Trade
+                account={this.state.account}
+                setBank={this.setBank}
+                buyStock={this.buyStock}
+              />
             )}
           />
           <Route path="/profile" component={Profile} />
@@ -116,6 +134,7 @@ class App extends Component {
               <Portfolio
                 account={this.state.account}
                 stocks={this.state.stocks}
+                transactions={this.state.transactions}
                 setBank={this.setBank}
               />
             )}

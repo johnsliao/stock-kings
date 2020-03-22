@@ -64,6 +64,11 @@ class StockPicker extends Component {
                     this.props.setBank(
                       parseInt(this.props.account.buyingpower) - rowData.price
                     );
+                    this.props.buyStock({
+                      marketPrice: rowData.price,
+                      shortName: rowData.stock,
+                      symbol: rowData.symbol
+                    });
                   }
                 }
               }

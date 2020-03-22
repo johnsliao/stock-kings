@@ -46,7 +46,8 @@ app.get("/getAccountWithProc", function(req, res) {
   // execute query
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      console.log(err);
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);
@@ -57,7 +58,8 @@ app.get("/getAccountByUsername/:username", function(req, res) {
   let query = `SELECT userId, username, buyingpower FROM \`useraccount\` where username='${req.params.username}'`;
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      console.log(err);
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);
@@ -65,10 +67,23 @@ app.get("/getAccountByUsername/:username", function(req, res) {
 });
 
 app.get("/getStocksByUsernameId/:userId", function(req, res) {
-  let query = `SELECT * FROM\`portfolio\` where UserAccountID='${req.params.userId}'`;
+  let query = `SELECT * FROM \`portfolio\` where UserAccountID='${req.params.userId}'`;
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/getTransactionsByUsernameId/:userId", function(req, res) {
+  let query = `SELECT * FROM \`transactions\` where UserAccountID='${req.params.userId}'`;
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);
@@ -77,11 +92,12 @@ app.get("/getStocksByUsernameId/:userId", function(req, res) {
 
 app.post("/updateBuyingPower/", function(req, res) {
   console.log(req.body.username);
-  let query = `UPDATE \`useraccount\` SET \`Buyingpower\`=${req.body.value} where Username='${req.body.username}'`;
+  const query = `UPDATE \`useraccount\` SET \`Buyingpower\`=${req.body.value} where Username='${req.body.username}'`;
   console.log(query);
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      console.log(err);
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);
@@ -89,11 +105,12 @@ app.post("/updateBuyingPower/", function(req, res) {
 });
 
 app.post("/buyStock/", function(req, res) {
-  let query = `UPDATE \`useraccount\` SET \`buyingpower\`=${req.body.value} where username='${req.body.username}`;
-
+  const query = `INSERT INTO \`transactions\` (\`UserAccountID\`, \`PurchasePrice\`, \`ShortName\`, \`Symbol\`) VALUES (${req.body.userId}, ${req.body.marketPrice}, "${req.body.shortName}", "${req.body.symbol}")`;
+  console.log("Query is " + query);
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      console.log(err);
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);
@@ -111,7 +128,7 @@ app.post("/updateBuyingPowerWithProc/", function(req, res) {
   // execute query
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);
@@ -137,7 +154,7 @@ app.post("/createUser/", function(req, res) {
   // execute query
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);
@@ -159,7 +176,7 @@ app.post("/becomeFriends/", function(req, res) {
   // execute query
   db.query(query, (err, result) => {
     if (err) {
-      res.send(":");
+      res.status(500).send("Internal server error :(");
     }
     console.log(result);
     res.send(result);

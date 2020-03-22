@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import StockPortfolio from "./StockPortfolio";
+import TransactionsPortfolio from "./TransactionsPortfolio";
 import { Grid } from "@material-ui/core";
 
 class Portfolio extends Component {
@@ -15,6 +16,14 @@ class Portfolio extends Component {
               account={this.props.account}
               stocks={this.props.stocks}
               setBank={this.props.setBank}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TransactionsPortfolio
+              account={this.props.account}
+              stocks={this.props.stocks}
+              setBank={this.props.setBank}
+              transactions={this.props.transactions}
             />
           </Grid>
         </Grid>
