@@ -1,16 +1,21 @@
+
+DROP procedure if exists `GetUser`;
+
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUser`( IN usernameVar varchar(30), passwordVar char(100))
 BEGIN
  	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
-  	Select `UserID`
+  	Select `UserID`, `username`, `buyingpower`
   	from useraccount
   	where Username = usernameVar
-  	and Password = passwordVar;
+  	and Password = passwordVar
+  	and END_DATE IS NULL;
   	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
 END$$
 DELIMITER ;
 
 
+DROP procedure if exists `GetPortfolioByUser`;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetPortfolioByUser`(IN userIDVar int)
@@ -23,6 +28,7 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP procedure if exists `GetFriendsListByUserID`;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetFriendsListByUserID`(IN userIDVar int)
@@ -50,6 +56,7 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP procedure if exists `CreateFriendshipRecord`;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateFriendshipRecord`(IN userIDOneVar int, userIDTwoVar int)
@@ -68,6 +75,8 @@ BEGIN
 END$$
 DELIMITER ;
 
+
+DROP procedure if exists `UpsertPortfolioRecord`;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpsertPortfolioRecord`(IN userIDVar int, numOwnedVar int, marketPriceVar decimal(10,0), shortNameVar varchar(50), symbolVar varchar(10), marketChangeVar decimal(10,0))
@@ -98,3 +107,32 @@ BEGIN
   	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
 END$$
 DELIMITER ;
+
+
+DROP procedure if exists `CreateUser`;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateUser`( IN usernameVar varchar(30), passwordVar char(100), emailVar varchar(80))
+BEGIN
+ 	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
+	INSERT INTO `useraccount` (username, password, emailaddress, BuyingPower)
+	VALUES (usernameVar, passwordVar, emailVar, 2000); 	
+  	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
+END$$
+DELIMITER ;
+
+
+DROP procedure if exists `UpdateBuyingPower`;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateBuyingPower`( IN userIdVar int, buyingPowerVar decimal(10,2))
+BEGIN
+ 	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
+	UPDATE `useraccount`
+	SET 	buyingpower = buyingPowerVar
+	WHERE	userId = userIdVar; 	
+  	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
+END$$
+DELIMITER ;
+
+ALTER TABLE `useraccount` CHANGE `BuyingPower` `BuyingPower` DECIMAL(10,2) NOT NULL DEFAULT '2000.00';
