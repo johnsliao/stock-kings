@@ -140,6 +140,19 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 -- Dumping data for table `transactions`
 --
 
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
+(1, 3, '100', 'Apple', 'APPL', '2020-02-20 19:12:54');
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
+(2, 3, '125', 'Apple', 'APPL', '2020-02-20 19:13:54');
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
+(3, 3, '150', 'Apple', 'APPL', '2020-02-20 19:14:54');
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
+(4, 3, '250', 'Apple', 'APPL', '2020-02-20 19:15:54');
+
+INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `ShortName`, `Symbol`, `PURCHASE_DATE`) VALUES
+(5, 3, '10', 'YAHOO', 'YHOO', '2020-02-21 21:15:54');
+
+
 -- --------------------------------------------------------
 
 
