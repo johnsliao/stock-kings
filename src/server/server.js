@@ -54,12 +54,7 @@ app.get("/getAccountWithProc", function(req, res) {
 });
 
 app.get("/getAccountByUsername/:username", function(req, res) {
-  let query =
-    "SELECT userId, username, buyingpower FROM `useraccount` where username='" +
-    req.params.username +
-    "'";
-
-  // execute query
+  let query = `SELECT userId, username, buyingpower FROM \`useraccount\` where username='${req.params.username}'`;
   db.query(query, (err, result) => {
     if (err) {
       res.send(":");
@@ -70,11 +65,7 @@ app.get("/getAccountByUsername/:username", function(req, res) {
 });
 
 app.get("/getStocksByUsernameId/:userId", function(req, res) {
-  console.log("PAram is " + req.params.userId);
-  let query =
-    "SELECT * FROM `portfolio` where UserAccountID='" + req.params.userId + "'";
-  console.log(query);
-  // execute query
+  let query = `SELECT * FROM\`portfolio\` where UserAccountID='${req.params.userId}'`;
   db.query(query, (err, result) => {
     if (err) {
       res.send(":");
@@ -86,14 +77,20 @@ app.get("/getStocksByUsernameId/:userId", function(req, res) {
 
 app.post("/updateBuyingPower/", function(req, res) {
   console.log(req.body.username);
-  let query =
-    "UPDATE `useraccount` SET `buyingpower`=" +
-    req.body.value +
-    " where username='" +
-    req.body.username +
-    "'";
+  let query = `UPDATE \`useraccount\` SET \`Buyingpower\`=${req.body.value} where Username='${req.body.username}'`;
+  console.log(query);
+  db.query(query, (err, result) => {
+    if (err) {
+      res.send(":");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
 
-  // execute query
+app.post("/buyStock/", function(req, res) {
+  let query = `UPDATE \`useraccount\` SET \`buyingpower\`=${req.body.value} where username='${req.body.username}`;
+
   db.query(query, (err, result) => {
     if (err) {
       res.send(":");

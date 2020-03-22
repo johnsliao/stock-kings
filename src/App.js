@@ -28,6 +28,7 @@ class App extends Component {
         response =>
           response.json().then(result => {
             this.setState({ account: result[0] });
+            console.log(result);
           }),
         error => {
           console.log(error);
@@ -52,6 +53,7 @@ class App extends Component {
   setBank = value => {
     this.setState({
       account: {
+        ...this.state.account,
         buyingpower: value.toFixed(2)
       }
     });
@@ -63,8 +65,33 @@ class App extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: "ralph",
+        username: this.state.account.username,
         value: value
+      })
+    });
+  };
+
+  buyStock = stock => {
+    let newStocks = this.state.stocks;
+    newStocks.push(stock);
+    this.setState({
+      stocks: {
+        stocks: newStocks
+      }
+    });
+
+    fetch("http://localhost:4000/buyStock/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.account.username,
+        userId: this.state.account.userId,
+        marketPrice: stock.marketPrice,
+        shortName: stock.shortName,
+        symbol: stock.symbol
       })
     });
   };
