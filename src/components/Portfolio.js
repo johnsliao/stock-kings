@@ -8,6 +8,7 @@ class Portfolio extends Component {
         <h2>Bank ${this.props.account.buyingpower}</h2>
         <StockPortfolio
           account={this.props.account}
+          stocks={this.props.stocks}
           setBank={this.props.setBank}
         />
       </div>

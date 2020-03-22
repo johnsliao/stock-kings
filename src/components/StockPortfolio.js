@@ -14,23 +14,15 @@ class StockPortfolio extends Component {
         { title: "Shares Owned", field: "shares" },
         { title: "Total", field: "total" }
       ],
-      data: [
-        {
-          stock: "Yahoo",
-          symbol: "YAHOO",
-          price: 25.12,
-          shares: 1,
-          total: 100
-        },
-        {
-          stock: "Google",
-          symbol: "GOOG",
-          price: 35.42,
-          shares: 2,
-          total: 100
-        },
-        { stock: "Apple", symbol: "AAPL", price: 199.29, shares: 3, total: 100 }
-      ]
+      data: this.props.stocks.map(stock => {
+        return {
+          stock: stock.ShortName,
+          symbol: stock.Symbol,
+          price: stock.MarketPrice,
+          shares: stock.NumberOwned,
+          total: "$" + stock.NumberOwned * stock.MarketPrice
+        };
+      })
     };
   }
   checkBank = amount => {

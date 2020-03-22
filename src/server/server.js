@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public"))); // configure express to
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "password",
   database: "stockkings"
 });
 
@@ -35,12 +35,11 @@ db.connect(err => {
 });
 global.db = db;
 
-//get method to retrive account info based on username and encrypted password 
+//get method to retrive account info based on username and encrypted password
 app.get("/getAccountWithProc", function(req, res) {
-
   console.log(req.query);
   let username = req.query.username;
-  let password  = req.query.password;
+  let password = req.query.password;
 
   let query = "CALL `GetUser`('" + username + "','" + password + "');"; // query database to get all the accounts
 
@@ -58,8 +57,23 @@ app.get("/getAccountByUsername/:username", function(req, res) {
   let query =
     "SELECT userId, username, buyingpower FROM `useraccount` where username='" +
     req.params.username +
-    "'"; // query database to get all the accounts
+    "'";
 
+  // execute query
+  db.query(query, (err, result) => {
+    if (err) {
+      res.send(":");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/getStocksByUsernameId/:userId", function(req, res) {
+  console.log("PAram is " + req.params.userId);
+  let query =
+    "SELECT * FROM `portfolio` where UserAccountID='" + req.params.userId + "'";
+  console.log(query);
   // execute query
   db.query(query, (err, result) => {
     if (err) {
@@ -89,14 +103,13 @@ app.post("/updateBuyingPower/", function(req, res) {
   });
 });
 
-//post method to retrive account info based on username and encrypted password 
+//post method to retrive account info based on username and encrypted password
 app.post("/updateBuyingPowerWithProc/", function(req, res) {
-
   console.log(req.body);
   let userId = req.body.userId;
   let buyingPower = req.body.value;
 
-  let query = "CALL `UpdateBuyingPower`(" + userId + ", " + buyingPower  +");";
+  let query = "CALL `UpdateBuyingPower`(" + userId + ", " + buyingPower + ");";
 
   // execute query
   db.query(query, (err, result) => {
@@ -108,16 +121,21 @@ app.post("/updateBuyingPowerWithProc/", function(req, res) {
   });
 });
 
-
-//post method to retrive account info based on username and encrypted password 
+//post method to retrive account info based on username and encrypted password
 app.post("/createUser/", function(req, res) {
-  
   console.log(req.body);
   let username = req.body.username;
   let password = req.body.password;
   let email = req.body.email;
 
-  let query = "CALL `CreateUser`('"+ username +"', '" + password + "', '" + email + "');";
+  let query =
+    "CALL `CreateUser`('" +
+    username +
+    "', '" +
+    password +
+    "', '" +
+    email +
+    "');";
 
   // execute query
   db.query(query, (err, result) => {
@@ -129,7 +147,7 @@ app.post("/createUser/", function(req, res) {
   });
 });
 
-//post method to retrive account info based on username and encrypted password 
+//post method to retrive account info based on username and encrypted password
 app.post("/becomeFriends/", function(req, res) {
   console.log(req.body);
 
@@ -138,7 +156,8 @@ app.post("/becomeFriends/", function(req, res) {
 
   console.log(req.body.userIdTwo);
 
-  let query = "CALL `CreateFriendshipRecord`("+ userIdOne + "," + userIdTwo + ");";
+  let query =
+    "CALL `CreateFriendshipRecord`(" + userIdOne + "," + userIdTwo + ");";
 
   // execute query
   db.query(query, (err, result) => {

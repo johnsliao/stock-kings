@@ -19,18 +19,34 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: {}
+      account: {},
+      stocks: []
     };
 
-    fetch("http://localhost:4000/getAccountByUsername/ralph").then(
-      response =>
-        response.json().then(result => {
-          this.setState({ account: result[0] });
-        }),
-      error => {
-        console.log(error);
-      }
-    );
+    fetch("http://localhost:4000/getAccountByUsername/zimei")
+      .then(
+        response =>
+          response.json().then(result => {
+            this.setState({ account: result[0] });
+          }),
+        error => {
+          console.log(error);
+        }
+      )
+      .then(() => {
+        fetch(
+          `http://localhost:4000/getStocksByUsernameId/${this.state.account.userId}`
+        ).then(
+          response =>
+            response.json().then(result => {
+              console.log(result);
+              this.setState({ stocks: result });
+            }),
+          error => {
+            console.log(error);
+          }
+        );
+      });
   }
 
   setBank = value => {
@@ -70,7 +86,11 @@ class App extends Component {
           <Route
             path="/portfolio"
             component={() => (
-              <Portfolio account={this.state.account} setBank={this.setBank} />
+              <Portfolio
+                account={this.state.account}
+                stocks={this.state.stocks}
+                setBank={this.setBank}
+              />
             )}
           />
           <Route path="/search-friends" component={SearchFriends} />
