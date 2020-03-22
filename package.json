@@ -25,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:all": "react-scripts start & yarn --cwd ./src/server start"
+    "start:all": "react-scripts start & yarn --cwd ./src/server start",
+    "stop:all": "kill -9 $(lsof -t -i:3000) && kill -9 $(lsof -t -i:4000)"
   },
   "eslintConfig": {
     "extends": "react-app"
