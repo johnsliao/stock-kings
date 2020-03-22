@@ -24,6 +24,11 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `stockkings` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `stockkings`;
 
+DROP TABLE IF EXISTS FRIENDSHIP;
+DROP TABLE IF EXISTS PORTFOLIO;
+DROP TABLE IF EXISTS STOCKNAMESLOOKUP;
+DROP TABLE IF EXISTS USERACCOUNT;
+
 -- --------------------------------------------------------
 
 --
@@ -141,6 +146,14 @@ DELIMITER $$
 --
 -- Procedures
 --
+
+DROP PROCEDURE IF EXISTS `CreateFriendshipRecord`;
+DROP PROCEDURE IF EXISTS `GetFriendsListByUserID`;
+DROP PROCEDURE IF EXISTS `GetPortfolioByUserID`;
+DROP PROCEDURE IF EXISTS `GetUserByUserID`;
+DROP PROCEDURE IF EXISTS `UpsertPortfolioRecord`;
+
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateFriendshipRecord` (IN `userIDOneVar` INT, `userIDTwoVar` INT)  BEGIN
  	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
   	
