@@ -90,6 +90,18 @@ app.get("/getTransactionsByUsernameId/:userId", function(req, res) {
   });
 });
 
+app.get("/getFriendsByUserId/:userId", function(req, res) {
+  let query = `SELECT Username, UserID FROM \`friendship\` f INNER JOIN \`useraccount\` u ON f.FriendTwoUserAccountID=u.UserID WHERE FriendOneUserAccountID=${req.params.userId}`;
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
 app.post("/updateBuyingPower/", function(req, res) {
   console.log(req.body.username);
   const query = `UPDATE \`useraccount\` SET \`Buyingpower\`=${req.body.value} where Username='${req.body.username}'`;

@@ -21,6 +21,7 @@ class App extends Component {
     this.state = {
       account: {},
       stocks: [],
+      friends: [],
       transactions: []
     };
 
@@ -29,7 +30,6 @@ class App extends Component {
         response =>
           response.json().then(result => {
             this.setState({ account: result[0] });
-            console.log(result);
           }),
         error => {
           console.log(error);
@@ -41,7 +41,6 @@ class App extends Component {
         ).then(
           response =>
             response.json().then(result => {
-              console.log(result);
               this.setState({ stocks: result });
             }),
           error => {
@@ -55,12 +54,40 @@ class App extends Component {
         ).then(
           response =>
             response.json().then(result => {
-              console.log(result);
               this.setState({ transactions: result.reverse() });
             }),
           error => {
             console.log(error);
           }
+        );
+      })
+      .then(() => {
+        fetch(
+          `http://localhost:4000/getFriendsByUserId/${this.state.account.userId}`
+        ).then(response =>
+          response.json().then(results => {
+            results.forEach(friend => {
+              fetch(
+                `http://localhost:4000/getTransactionsByUsernameId/${friend.UserID}`
+              ).then(
+                transactionResponse =>
+                  transactionResponse.json().then(t => {
+                    let newFriends = [
+                      ...this.state.friends,
+                      { ...friend, transactions: t }
+                    ];
+                    this.setState({
+                      friends: newFriends
+                    });
+                    return true;
+                  }),
+                error => {
+                  console.log(error);
+                }
+              );
+              return true;
+            });
+          })
         );
       });
   }
@@ -141,7 +168,10 @@ class App extends Component {
               />
             )}
           />
-          <Route path="/search-friends" component={SearchFriends} />
+          <Route
+            path="/search-friends"
+            component={() => <SearchFriends friends={this.state.friends} />}
+          />
           <Route path="/competition" component={Competition} />
           <Route path="/chat" component={Chat} />
           <Route path="/bug" component={Bug} />
