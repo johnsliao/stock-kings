@@ -79,7 +79,7 @@ app.get("/getStocksByUsernameId/:userId", function(req, res) {
 });
 
 app.get("/getTransactionsByUsernameId/:userId", function(req, res) {
-  let query = `SELECT * FROM \`transactions\` where UserAccountID='${req.params.userId}'`;
+  let query = `SELECT * FROM \`transactions\` where UserAccountID='${req.params.userId}' ORDER BY PURCHASE_DATE DESC`;
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
@@ -104,7 +104,7 @@ app.post("/updateBuyingPower/", function(req, res) {
   });
 });
 
-app.post("/buyStock/", function(req, res) {
+app.post("/transactStock/", function(req, res) {
   const query = `INSERT INTO \`transactions\` (\`UserAccountID\`, \`PurchasePrice\`, \`ShortName\`, \`Symbol\`, \`Type\`) VALUES (${req.body.userId}, ${req.body.marketPrice}, "${req.body.shortName}", "${req.body.symbol}", "${req.body.type}")`;
   console.log("Query is " + query);
   db.query(query, (err, result) => {

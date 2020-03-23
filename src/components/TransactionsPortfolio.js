@@ -11,7 +11,12 @@ class TransactionsPortfolio extends Component {
         { title: "Symbol", field: "symbol" },
         { title: "Stock", field: "stock" },
         { title: "Purchase Price", field: "price" },
-        { title: "Purchase Date", field: "date" },
+        {
+          title: "Purchase Date",
+          field: "date",
+          sorting: true,
+          defaultSort: "desc"
+        },
         { title: "Type", field: "type" }
       ],
       data: this.props.transactions.map(transaction => {

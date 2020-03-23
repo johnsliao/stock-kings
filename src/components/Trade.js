@@ -10,7 +10,7 @@ class Trade extends Component {
         <StockPicker
           account={this.props.account}
           setBank={this.props.setBank}
-          buyStock={this.props.buyStock}
+          transactStock={this.props.transactStock}
           transactions={this.props.transactions}
         />
       </div>

@@ -17,6 +17,7 @@ class Portfolio extends Component {
               stocks={this.props.stocks}
               setBank={this.props.setBank}
               transactions={this.props.transactions}
+              transactStock={this.props.transactStock}
             />
           </Grid>
           <Grid item xs={12}>

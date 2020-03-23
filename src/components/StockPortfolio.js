@@ -11,7 +11,6 @@ class StockPortfolio extends Component {
         { title: "Symbol", field: "symbol" },
         { title: "Stock", field: "stock" },
         { title: "Current Price", field: "currentPrice" },
-
         { title: "Average Cost Per Share", field: "costPerShare" },
         { title: "Avg Cost", field: "avgCost" },
         { title: "Total Cost", field: "totalCost" },
@@ -32,12 +31,12 @@ class StockPortfolio extends Component {
       })
     };
   }
-  checkBank = amount => {
-    if (this.props.account.buyingpower - amount < 0) {
-      this.setState({ open: true });
-      return false;
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
-    return true;
+    this.setState({ open: false });
   };
 
   calculateStocks = () => {
@@ -61,7 +60,8 @@ class StockPortfolio extends Component {
           stocks[i].shares += 1;
 
           stocks[i].avgCost = stocks[i].totalCost / stocks[i].shares;
-          stocks[i].gain = currentStockPrice - stocks[i].totalCost;
+          stocks[i].gain =
+            currentStockPrice * stocks[i].shares - stocks[i].totalCost;
         } else {
           stocks.push({
             stock: transaction.ShortName,
@@ -73,29 +73,19 @@ class StockPortfolio extends Component {
             gain: 0
           });
         }
-      } else {
+      }
+
+      if (transaction.Type === "SELL") {
         if (stockNames.includes(transaction.ShortName)) {
           const i = stocks.findIndex(_ => _.stock === transaction.ShortName);
 
-          stocks[i].costPerShare =
-            (stocks[i].costPerShare * stocks[i].shares -
-              transaction.PurchasePrice) /
-            (stocks[i].shares + 1);
-          stocks[i].totalCost =
-            stocks[i].totalCost * stocks[i].shares - transaction.PurchasePrice;
-
           stocks[i].shares -= 1;
-
-          stocks[i].avgCost = stocks[i].totalCost / stocks[i].shares;
-          stocks[i].gain = currentStockPrice - stocks[i].totalCost;
-
-          if (stocks[i].shares === 0) {
-            stocks.splice(i, 1);
-          }
         }
       }
     });
 
+    // Remove stocks with 0 shares
+    stocks = stocks.filter(_ => _.shares > 0);
     return stocks;
   };
   render() {
@@ -116,11 +106,16 @@ class StockPortfolio extends Component {
                 icon: "remove",
                 tooltip: "Sell Stock",
                 onClick: (event, rowData) => {
-                  if (this.checkBank(rowData.price)) {
-                    this.props.setBank(
-                      parseInt(this.props.account.buyingpower) + rowData.price
-                    );
-                  }
+                  this.props.transactStock({
+                    marketPrice: rowData.currentPrice,
+                    shortName: rowData.stock,
+                    symbol: rowData.symbol,
+                    type: "SELL"
+                  });
+                  this.props.setBank(
+                    parseInt(this.props.account.buyingpower) +
+                      rowData.currentPrice
+                  );
                 }
               }
             ]}

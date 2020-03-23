@@ -56,7 +56,7 @@ class App extends Component {
           response =>
             response.json().then(result => {
               console.log(result);
-              this.setState({ transactions: result });
+              this.setState({ transactions: result.reverse() });
             }),
           error => {
             console.log(error);
@@ -86,7 +86,7 @@ class App extends Component {
     });
   };
 
-  buyStock = stockObj => {
+  transactStock = stockObj => {
     let newTransactions = this.state.transactions;
     newTransactions.push(stockObj);
     this.setState({
@@ -95,7 +95,7 @@ class App extends Component {
       }
     });
 
-    fetch("http://localhost:4000/buyStock/", {
+    fetch("http://localhost:4000/transactStock/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -124,7 +124,7 @@ class App extends Component {
               <Trade
                 account={this.state.account}
                 setBank={this.setBank}
-                buyStock={this.buyStock}
+                transactStock={this.transactStock}
               />
             )}
           />
@@ -137,6 +137,7 @@ class App extends Component {
                 stocks={this.state.stocks}
                 transactions={this.state.transactions}
                 setBank={this.setBank}
+                transactStock={this.transactStock}
               />
             )}
           />
