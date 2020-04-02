@@ -138,14 +138,6 @@ class App extends Component {
   };
 
   transactStock = stockObj => {
-    let newTransactions = this.state.transactions;
-    newTransactions.push(stockObj);
-    this.setState({
-      stocks: {
-        transactions: newTransactions
-      }
-    });
-
     fetch("http://localhost:4000/transactStock/", {
       method: "POST",
       headers: {
@@ -159,6 +151,18 @@ class App extends Component {
         symbol: stockObj.symbol,
         type: stockObj.type
       })
+    }).then(() => {
+      fetch(
+        `http://localhost:4000/getTransactionsByUsernameId/${this.state.account.userId}`
+      ).then(
+        response =>
+          response.json().then(result => {
+            this.setState({ transactions: result.reverse() });
+          }),
+        error => {
+          console.log(error);
+        }
+      );
     });
   };
 

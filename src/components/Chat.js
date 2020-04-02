@@ -1,41 +1,41 @@
 import React, { Component } from "react";
 import MuiAlert from "@material-ui/lab/Alert";
-import Chat from 'chat-react';
-
-
+import Chat from "chat-react";
 
 export default class MyChat extends Component {
-  
   state = {
-    inputValue: '',
+    inputValue: "",
     messages: [],
     timestamp: new Date().getTime()
-  }
+  };
   setInputfoucs = () => {
-    this.chat.refs.input.inputFocus();  //set input foucus
-  }
+    this.chat.refs.input.inputFocus(); //set input foucus
+  };
   setScrollTop = () => {
-    this.chat.refs.message.setScrollTop(1200);  //set scrollTop position
-  }
-  sendMessage = (v) => {
-    const {value} = v;
+    this.chat.refs.message.setScrollTop(1200); //set scrollTop position
+  };
+  sendMessage = v => {
+    const { value } = v;
     if (!value) return;
-    const {messages = []} = this.state;
+    const { messages = [] } = this.state;
     messages.push(v);
-    this.setState({messages, timestamp: new Date().getTime(), inputValue: ''});
-  }
+    this.setState({
+      messages,
+      timestamp: new Date().getTime(),
+      inputValue: ""
+    });
+  };
   render() {
-    const {inputValue, messages, timestamp} = this.state;
+    const { inputValue, messages, timestamp } = this.state;
     const userInfo = {
       avatar: "http://img.binlive.cn/6.png",
       userId: "59e454ea53107d66ceb0a598",
-      name: 'ricky'
+      name: "ricky"
     };
 
-  
     return (
       <Chat
-        ref={el => this.chat = el}
+        ref={el => (this.chat = el)}
         className="my-chat-box"
         dataSource={messages}
         userInfo={userInfo}
@@ -43,11 +43,8 @@ export default class MyChat extends Component {
         sendMessage={this.sendMessage}
         timestamp={timestamp}
         placeholder="Please type the message"
-        messageListStyle={{width: '100%', height: window.outerHeight}}
+        messageListStyle={{ width: "100%", height: window.outerHeight }}
       />
-
     );
   }
 }
-
-

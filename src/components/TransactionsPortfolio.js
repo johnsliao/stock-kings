@@ -19,15 +19,17 @@ class TransactionsPortfolio extends Component {
         },
         { title: "Type", field: "type" }
       ],
-      data: this.props.transactions.map(transaction => {
-        return {
-          stock: transaction.ShortName,
-          symbol: transaction.Symbol,
-          price: "$" + transaction.PurchasePrice,
-          date: transaction.PURCHASE_DATE,
-          type: transaction.Type
-        };
-      })
+      data: this.props.transactions
+        .filter(transaction => transaction !== undefined)
+        .map(transaction => {
+          return {
+            stock: transaction.ShortName,
+            symbol: transaction.Symbol,
+            price: "$" + transaction.PurchasePrice,
+            date: transaction.PURCHASE_DATE,
+            type: transaction.Type
+          };
+        })
     };
   }
   checkBank = amount => {
