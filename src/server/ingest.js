@@ -21,6 +21,14 @@ function fetchApi(symbols) {
         const longName = d.longName;
         const shortName = d.shortName;
 
+        if (
+          price === undefined ||
+          symbol === undefined ||
+          longName === undefined ||
+          shortName === undefined
+        )
+          return;
+
         fetch("http://localhost:4000/updateStock/", {
           method: "POST",
           headers: {
@@ -40,9 +48,6 @@ function fetchApi(symbols) {
       console.log(err);
     });
 }
-
-fetchApi("AAPL,ABBV");
-
 const symbols = [
   "MMM",
   "AOS",
@@ -550,3 +555,5 @@ const symbols = [
   "ZION",
   "ZTS"
 ];
+
+fetchApi(symbols.join(","));

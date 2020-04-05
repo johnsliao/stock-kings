@@ -123,8 +123,9 @@ app.post("/updateStock/", function(req, res) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(r);
+    console.log("Processing " + req.body.symbol);
     if (r.length === 0) {
+      console.log("  -> Insert");
       const insert = `INSERT INTO \`stocks\` (\`SYMBOL\`, \`SHORT_NAME\`, \`LONG_NAME\`, \`PRICE\`) VALUES ("${req.body.symbol}", "${req.body.shortName}", "${req.body.longName}", ${req.body.price})`;
       db.query(insert, (err, result) => {
         if (err) {
@@ -135,6 +136,7 @@ app.post("/updateStock/", function(req, res) {
         res.send(result);
       });
     } else {
+      console.log("  -> Update");
       const update = `UPDATE \`stocks\` SET \`PRICE\`=${req.body.price} where SYMBOL='${req.body.symbol}'`;
       db.query(update, (err, result) => {
         if (err) {
