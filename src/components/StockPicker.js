@@ -16,13 +16,17 @@ class StockPicker extends Component {
       columns: [
         { title: "Symbol", field: "symbol" },
         { title: "Stock", field: "stock" },
-        { title: "Price", field: "price" }
+        { title: "Price", field: "price" },
+        { title: "Last updated", field: "lastUpdated" }
       ],
-      data: [
-        { stock: "Yahoo", symbol: "YAHOO", price: 25.12 },
-        { stock: "Google", symbol: "GOOG", price: 35.42 },
-        { stock: "Apple", symbol: "AAPL", price: 199.29 }
-      ]
+      data: this.props.stocksDb.map(_ => {
+        return {
+          stock: _.LONG_NAME,
+          symbol: _.SYMBOL,
+          price: _.PRICE,
+          lastUpdated: _.UPDATED
+        };
+      })
     };
   }
 

@@ -78,6 +78,18 @@ app.get("/getStocksByUsernameId/:userId", function(req, res) {
   });
 });
 
+app.get("/getStocksDb", function(req, res) {
+  let query = `SELECT * FROM \`stocks\``;
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
 app.get("/getTransactionsByUsernameId/:userId", function(req, res) {
   let query = `SELECT * FROM \`transactions\` where UserAccountID='${req.params.userId}' ORDER BY PURCHASE_DATE DESC`;
   db.query(query, (err, result) => {

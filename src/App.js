@@ -23,6 +23,7 @@ class App extends Component {
     this.state = {
       account: {},
       stocks: [],
+      stocksDb: [],
       friends: [],
       transactions: []
     };
@@ -93,26 +94,15 @@ class App extends Component {
         );
       })
       .then(() => {
-        fetch(
-          "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols=AAPL",
-          {
-            method: "GET",
-            headers: {
-              "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
-              "x-rapidapi-key":
-                "26b99a5e0emsha42f874174253e1p1de9b0jsn3c8169bfd0b7"
-            }
+        fetch(`http://localhost:4000/getStocksDb`).then(
+          response =>
+            response.json().then(result => {
+              this.setState({ stocksDb: result });
+            }),
+          error => {
+            console.log(error);
           }
-        )
-          .then(response => {
-            return response.json();
-          })
-          .then(data => {
-            console.log(data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        );
       });
   }
 
@@ -167,6 +157,7 @@ class App extends Component {
   };
 
   render() {
+    console.log(this.state.stocksDb);
     return (
       <div className="App">
         <MenuAppBar account={this.state.account} />
@@ -180,6 +171,7 @@ class App extends Component {
                 account={this.state.account}
                 setBank={this.setBank}
                 transactStock={this.transactStock}
+                stocksDb={this.state.stocksDb}
               />
             )}
           />

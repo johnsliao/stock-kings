@@ -77,3 +77,5 @@ The following are functional requirements that are "nice" to haves.
 6. `yarn start:all` will start front end and backend server
 7. Verify that front end is running on `http://localhost:3000`
 8. Verify that back end is running on `http://localhost:4000/getAccounts`
+
+To ingest new data, run `node src/server/ingest.js`
