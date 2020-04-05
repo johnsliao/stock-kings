@@ -29,6 +29,29 @@ DROP TABLE IF EXISTS PORTFOLIO;
 DROP TABLE IF EXISTS STOCKNAMESLOOKUP;
 DROP TABLE IF EXISTS USERACCOUNT;
 DROP TABLE IF EXISTS TRANSACTIONS;
+DROP TABLE IF EXISTS STOCKS;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stocks`
+--
+
+CREATE TABLE IF NOT EXISTS `stocks` (
+  `STOCKID` int(11) NOT NULL AUTO_INCREMENT,
+  `SYMBOL` varchar(250) NOT NULL,
+  `SHORT_NAME` varchar(250) NOT NULL,
+  `LONG_NAME` varchar(250) NOT NULL,
+  `PRICE` FLOAT,
+  `UPDATED` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`STOCKID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stocks`
+--
+
+-- --------------------------------------------------------
 
 -- --------------------------------------------------------
 

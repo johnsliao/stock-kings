@@ -116,6 +116,38 @@ app.post("/updateBuyingPower/", function(req, res) {
   });
 });
 
+app.post("/updateStock/", function(req, res) {
+  const exists = `SELECT * FROM stocks WHERE SYMBOL='${req.body.symbol}'`;
+  db.query(exists, (err, r) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(r);
+    if (r.length === 0) {
+      const insert = `INSERT INTO \`stocks\` (\`SYMBOL\`, \`SHORT_NAME\`, \`LONG_NAME\`, \`PRICE\`) VALUES ("${req.body.symbol}", "${req.body.shortName}", "${req.body.longName}", ${req.body.price})`;
+      db.query(insert, (err, result) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Internal server error :(");
+        }
+        console.log(result);
+        res.send(result);
+      });
+    } else {
+      const update = `UPDATE \`stocks\` SET \`PRICE\`=${req.body.price} where SYMBOL='${req.body.symbol}'`;
+      db.query(update, (err, result) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Internal server error :(");
+        }
+        console.log(result);
+        res.send(result);
+      });
+    }
+  });
+});
+
 app.post("/transactStock/", function(req, res) {
   const query = `INSERT INTO \`transactions\` (\`UserAccountID\`, \`PurchasePrice\`, \`ShortName\`, \`Symbol\`, \`Type\`) VALUES (${req.body.userId}, ${req.body.marketPrice}, "${req.body.shortName}", "${req.body.symbol}", "${req.body.type}")`;
   console.log("Query is " + query);
