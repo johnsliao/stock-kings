@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public"))); // configure express to
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password",
+  password: "Password!23",
   database: "stockkings"
 });
 
@@ -55,7 +55,7 @@ app.get("/getAccountWithProc", function(req, res) {
 });
 
 app.get("/getAccountByUsername/:username", function(req, res) {
-  let query = `SELECT userId, username, buyingpower FROM \`useraccount\` where username='${req.params.username}'`;
+  let query = `SELECT userId, username, password, emailaddress, buyingpower FROM \`useraccount\` where username='${req.params.username}'`;
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
@@ -116,7 +116,49 @@ app.get("/getFriendsByUserId/:userId", function(req, res) {
 
 app.post("/updateBuyingPower/", function(req, res) {
   console.log(req.body.username);
-  const query = `UPDATE \`useraccount\` SET \`Buyingpower\`=${req.body.value} where Username='${req.body.username}'`;
+  const query = `UPDATE \`useraccount\` SET \`BuyingPower\`=${req.body.value} where Username='${req.body.username}'`;
+  console.log(query);
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+app.post("/updateUsername/", function(req, res) {
+  console.log(req.body.userId);
+  const query = `UPDATE \`useraccount\` SET \`Username\`='${req.body.name}' where UserID='${req.body.userId}'`;
+  console.log(query);
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+app.post("/updateEmail/", function(req, res) {
+  console.log(req.body.userId);
+  const query = `UPDATE \`useraccount\` SET \`EmailAddress\`='${req.body.email}' where UserID='${req.body.userId}'`;
+  console.log(query);
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+app.post("/updatePassword/", function(req, res) {
+  console.log(req.body.userId);
+  const query = `UPDATE \`useraccount\` SET \`Password\`='${req.body.password}' where UserID='${req.body.userId}'`;
   console.log(query);
   db.query(query, (err, result) => {
     if (err) {

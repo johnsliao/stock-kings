@@ -127,6 +127,69 @@ class App extends Component {
     });
   };
 
+  setName = name => {
+    this.setState({
+      account: {
+        ...this.state.account,
+        username: name
+      }
+    });
+
+    fetch("http://localhost:4000/updateUsername/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId: this.state.account.userId,
+        name: name
+      })
+    });
+  };
+
+  setEmail = email => {
+    this.setState({
+      account: {
+        ...this.state.account,
+        emailaddress: email
+      }
+    });
+
+    fetch("http://localhost:4000/updateEmail/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId: this.state.account.userId,
+        email: email
+      })
+    });
+  };
+
+  setPassword = password => {
+    this.setState({
+      account: {
+        ...this.state.account,
+        password: password
+      }
+    });
+
+    fetch("http://localhost:4000/updatePassword/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId: this.state.account.userId,
+        password: password
+      })
+    });
+  };
+
   transactStock = stockObj => {
     fetch("http://localhost:4000/transactStock/", {
       method: "POST",
@@ -156,6 +219,7 @@ class App extends Component {
     });
   };
 
+
   render() {
     console.log(this.state.stocksDb);
     return (
@@ -175,7 +239,19 @@ class App extends Component {
               />
             )}
           />
-          <Route path="/profile" component={Profile} />
+
+          <Route
+            path="/profile"
+            component={() => (
+              <Profile
+                account={this.state.account}
+                setName={this.setName}
+                setEmail={this.setEmail}
+                setPassword={this.setPassword}
+              />
+            )}
+          />
+
           <Route
             path="/portfolio"
             component={() => (

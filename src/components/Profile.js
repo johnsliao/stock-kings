@@ -3,86 +3,91 @@ import { TextField, Button } from '@material-ui/core'
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
-const localValue = {
-  username: "Zihao",
-  email: "horus@bu.edu",
-  phone: "8574138570",
-};
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class Profile extends Component {
+
+
   constructor(props) {
     super(props);
+
     this.state = {
-      username: this.props.username,
-      email: this.props.email,
-      phone: this.props.phone,
+      username: this.props.account.username,
+      email: this.props.account.emailaddress,
+      password: this.props.account.password,
       isEdit: false,
     };
-    this.changeInputValue = this.changeInputValue.bind(this);
-    this.submitValue = this.submitValue.bind(this);
+
+    this.changeUsername = this.changeUsername.bind(this);
+    this.changeEmail = this.changeEmail.bind(this);
+    this.changePassword = this.changePassword.bind(this);
+    this.submitName = this.submitName.bind(this);
+    this.submitEmail = this.submitEmail.bind(this);
+    this.submitPassword = this.submitPassword.bind(this);
   }
 
-  changeInputValue(e) {
-    localValue[e.target.name] = e.target.value;
+  changeUsername(e) {this.username = e.target.value}
+  changeEmail(e) {this.email = e.target.value}
+  changePassword(e) {this.password = e.target.value}
+
+  submitName = () => {
+    this.props.setName(this.username);
+    this.setState({ open: true});
   }
+  submitEmail = () => {
+    this.props.setEmail(this.email);
+    this.setState({ open: true});
 
-  submitValue(k) {
-
-    for (k in localValue) {
-      if(localValue[k]){
-        this.setState({
-          [k]:localValue[k],
-        });}
-      else {localValue[k] = this.state[k];}
-    }
-    this.setState({ open: true, description: "" });
+  }
+  submitPassword = () => {
+    this.props.setPassword(this.password);
+    this.setState({ open: true});
   }
 
   handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+    if (reason === "clickaway") {return;}
     this.setState({ open: false });
   };
 
   render() {
+
     return (
       <div>
         <h2>Profile</h2>
         <h3>
-          Username: {localValue.username}<br/>
+          Name: {this.props.account.username}<br/>
           <TextField
             type="text"
             name="username"
             label="Change Username"
             placeholder="New Username"
-            onChange={this.changeInputValue}
-          /><br/>
-          Email: {localValue.email}<br/>
+            onChange={this.changeUsername}
+          />
+          <Button onClick={this.submitName} variant="outlined">update</Button>
+          <br/>
+          Email: {this.props.account.emailaddress}<br/>
           <TextField
             type="text"
             name="email"
             label="Change Email"
             placeholder="New Email"
-            onChange={this.changeInputValue}
-          /><br/>
-          Phone: {localValue.phone}<br/>
+            onChange={this.changeEmail}
+          />
+          <Button onClick={this.submitEmail} variant="outlined">update</Button>
+          <br/>
+          Password: {this.props.account.password}<br/>
           <TextField
             type="text"
             name="phone"
-            label="Change Phone"
-            placeholder="New Phone"
-            onChange={this.changeInputValue}
-          /><br/>
+            label="Change Password"
+            placeholder="New Password"
+            onChange={this.changePassword}
+          />
+          <Button onClick={this.submitPassword} variant="outlined">update</Button>
+          <br/>
         </h3>
-        <Button onClick={this.submitValue}
-                variant="outlined"
-        >update
-        </Button>
         <Snackbar
           open={this.state.open}
           autoHideDuration={6000}
@@ -92,7 +97,6 @@ class Profile extends Component {
             Your information has been updated successfully!
           </Alert>
         </Snackbar>
-
       </div>
     )
   }
