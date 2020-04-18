@@ -33,16 +33,16 @@ class Profile extends Component {
   changePassword(e) {this.password = e.target.value}
 
   submitName = () => {
-    this.props.setName(this.username);
+    if (this.username) {this.props.setName(this.username);}
     this.setState({ open: true});
   }
   submitEmail = () => {
-    this.props.setEmail(this.email);
+    if (this.email) {this.props.setEmail(this.email);}
     this.setState({ open: true});
 
   }
   submitPassword = () => {
-    this.props.setPassword(this.password);
+    if (this.password) {this.props.setPassword(this.password);}
     this.setState({ open: true});
   }
 
@@ -94,7 +94,7 @@ class Profile extends Component {
           onClose={this.handleClose}
         >
           <Alert onClose={this.handleClose} severity="success">
-            Your information has been updated successfully!
+            No update information!
           </Alert>
         </Snackbar>
       </div>
