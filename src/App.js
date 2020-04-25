@@ -30,7 +30,7 @@ class App extends Component {
       userCompeititons: [],
     };
 
-    fetch("http://localhost:4000/getAccountByUsername/ralph")
+    fetch("http://localhost:4000/getAccountByUsername/zimei")
       .then(
         (response) =>
           response.json().then((result) => {
