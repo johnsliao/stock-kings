@@ -21,12 +21,12 @@ app.use(express.static(path.join(__dirname, "public"))); // configure express to
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Password!23",
-  database: "stockkings"
+  password: "password",
+  database: "stockkings",
 });
 
 // connect to database
-db.connect(err => {
+db.connect((err) => {
   if (err) {
     throw err;
   } else {
@@ -36,8 +36,7 @@ db.connect(err => {
 global.db = db;
 
 //get method to retrive account info based on username and encrypted password
-app.get("/getAccountWithProc", function(req, res) {
-  console.log(req.query);
+app.get("/getAccountWithProc", function (req, res) {
   let username = req.query.username;
   let password = req.query.password;
 
@@ -49,36 +48,44 @@ app.get("/getAccountWithProc", function(req, res) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.get("/getAccountByUsername/:username", function(req, res) {
-  let query = `SELECT userId, username, password, emailaddress, buyingpower FROM \`useraccount\` where username='${req.params.username}'`;
+app.get("/getAccountByUsername/:username", function (req, res) {
+  let query = `SELECT userId, username, password, emailaddress, buyingpower, competition_id FROM \`useraccount\` where username='${req.params.username}'`;
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.get("/getStocksByUsernameId/:userId", function(req, res) {
+app.get("/getCompetitions", function (req, res) {
+  let query = `SELECT * from \`competitions\`;`;
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    res.send(result);
+  });
+});
+
+app.get("/getStocksByUsernameId/:userId", function (req, res) {
   let query = `SELECT * FROM \`portfolio\` where UserAccountID='${req.params.userId}'`;
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.get("/getStocksDb", function(req, res) {
+app.get("/getStocksDb", function (req, res) {
   let query = `SELECT * FROM \`stocks\``;
   db.query(query, (err, result) => {
     if (err) {
@@ -90,73 +97,65 @@ app.get("/getStocksDb", function(req, res) {
   });
 });
 
-app.get("/getTransactionsByUsernameId/:userId", function(req, res) {
+app.get("/getTransactionsByUsernameId/:userId", function (req, res) {
   let query = `SELECT * FROM \`transactions\` where UserAccountID='${req.params.userId}' ORDER BY PURCHASE_DATE DESC`;
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.get("/getFriendsByUserId/:userId", function(req, res) {
+app.get("/getFriendsByUserId/:userId", function (req, res) {
   let query = `SELECT Username, UserID FROM \`friendship\` f INNER JOIN \`useraccount\` u ON f.FriendTwoUserAccountID=u.UserID WHERE FriendOneUserAccountID=${req.params.userId}`;
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.post("/updateBuyingPower/", function(req, res) {
+app.post("/updateBuyingPower/", function (req, res) {
   console.log(req.body.username);
   const query = `UPDATE \`useraccount\` SET \`BuyingPower\`=${req.body.value} where Username='${req.body.username}'`;
-  console.log(query);
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.post("/updateUsername/", function(req, res) {
+app.post("/updateUsername/", function (req, res) {
   console.log(req.body.userId);
   const query = `UPDATE \`useraccount\` SET \`Username\`='${req.body.name}' where UserID='${req.body.userId}'`;
-  console.log(query);
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.post("/updateEmail/", function(req, res) {
+app.post("/updateEmail/", function (req, res) {
   console.log(req.body.userId);
   const query = `UPDATE \`useraccount\` SET \`EmailAddress\`='${req.body.email}' where UserID='${req.body.userId}'`;
-  console.log(query);
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.post("/updatePassword/", function(req, res) {
+app.post("/updatePassword/", function (req, res) {
   console.log(req.body.userId);
   const query = `UPDATE \`useraccount\` SET \`Password\`='${req.body.password}' where UserID='${req.body.userId}'`;
   console.log(query);
@@ -165,12 +164,11 @@ app.post("/updatePassword/", function(req, res) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
-app.post("/updateStock/", function(req, res) {
+app.post("/updateStock/", function (req, res) {
   const exists = `SELECT * FROM stocks WHERE SYMBOL='${req.body.symbol}'`;
   db.query(exists, (err, r) => {
     if (err) {
@@ -186,39 +184,34 @@ app.post("/updateStock/", function(req, res) {
           console.log(err);
           res.status(500).send("Internal server error :(");
         }
-        console.log(result);
         res.send(result);
       });
     } else {
-      console.log("  -> Update");
       const update = `UPDATE \`stocks\` SET \`PRICE\`=${req.body.price} where SYMBOL='${req.body.symbol}'`;
       db.query(update, (err, result) => {
         if (err) {
           console.log(err);
           res.status(500).send("Internal server error :(");
         }
-        console.log(result);
         res.send(result);
       });
     }
   });
 });
 
-app.post("/transactStock/", function(req, res) {
+app.post("/transactStock/", function (req, res) {
   const query = `INSERT INTO \`transactions\` (\`UserAccountID\`, \`PurchasePrice\`, \`ShortName\`, \`Symbol\`, \`Type\`) VALUES (${req.body.userId}, ${req.body.marketPrice}, "${req.body.shortName}", "${req.body.symbol}", "${req.body.type}")`;
-  console.log("Query is " + query);
   db.query(query, (err, result) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
 //post method to retrive account info based on username and encrypted password
-app.post("/updateBuyingPowerWithProc/", function(req, res) {
+app.post("/updateBuyingPowerWithProc/", function (req, res) {
   console.log(req.body);
   let userId = req.body.userId;
   let buyingPower = req.body.value;
@@ -230,13 +223,12 @@ app.post("/updateBuyingPowerWithProc/", function(req, res) {
     if (err) {
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
 //post method to retrive account info based on username and encrypted password
-app.post("/createUser/", function(req, res) {
+app.post("/createUser/", function (req, res) {
   console.log(req.body);
   let username = req.body.username;
   let password = req.body.password;
@@ -256,13 +248,12 @@ app.post("/createUser/", function(req, res) {
     if (err) {
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });
 
 //post method to retrive account info based on username and encrypted password
-app.post("/becomeFriends/", function(req, res) {
+app.post("/becomeFriends/", function (req, res) {
   console.log(req.body);
 
   let userIdOne = req.body.userIdOne;
@@ -278,7 +269,6 @@ app.post("/becomeFriends/", function(req, res) {
     if (err) {
       res.status(500).send("Internal server error :(");
     }
-    console.log(result);
     res.send(result);
   });
 });

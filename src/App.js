@@ -9,7 +9,7 @@ import {
   Competition,
   Chat,
   Bug,
-  SearchFriends
+  SearchFriends,
 } from "./components";
 import MenuAppBar from "./components/MenuAppBar";
 import { Switch, Route } from "react-router-dom";
@@ -25,16 +25,18 @@ class App extends Component {
       stocks: [],
       stocksDb: [],
       friends: [],
-      transactions: []
+      transactions: [],
+      competitions: [],
+      userCompeititons: [],
     };
 
-    fetch("http://localhost:4000/getAccountByUsername/zimei")
+    fetch("http://localhost:4000/getAccountByUsername/ralph")
       .then(
-        response =>
-          response.json().then(result => {
+        (response) =>
+          response.json().then((result) => {
             this.setState({ account: result[0] });
           }),
-        error => {
+        (error) => {
           console.log(error);
         }
       )
@@ -42,11 +44,11 @@ class App extends Component {
         fetch(
           `http://localhost:4000/getStocksByUsernameId/${this.state.account.userId}`
         ).then(
-          response =>
-            response.json().then(result => {
+          (response) =>
+            response.json().then((result) => {
               this.setState({ stocks: result });
             }),
-          error => {
+          (error) => {
             console.log(error);
           }
         );
@@ -55,36 +57,37 @@ class App extends Component {
         fetch(
           `http://localhost:4000/getTransactionsByUsernameId/${this.state.account.userId}`
         ).then(
-          response =>
-            response.json().then(result => {
+          (response) =>
+            response.json().then((result) => {
               this.setState({ transactions: result.reverse() });
             }),
-          error => {
+          (error) => {
             console.log(error);
           }
         );
       })
       .then(() => {
+        if (!this.state.account.userId) return;
         fetch(
           `http://localhost:4000/getFriendsByUserId/${this.state.account.userId}`
-        ).then(response =>
-          response.json().then(results => {
-            results.forEach(friend => {
+        ).then((response) =>
+          response.json().then((results) => {
+            results.forEach((friend) => {
               fetch(
                 `http://localhost:4000/getTransactionsByUsernameId/${friend.UserID}`
               ).then(
-                transactionResponse =>
-                  transactionResponse.json().then(t => {
+                (transactionResponse) =>
+                  transactionResponse.json().then((t) => {
                     let newFriends = [
                       ...this.state.friends,
-                      { ...friend, transactions: t }
+                      { ...friend, transactions: t },
                     ];
                     this.setState({
-                      friends: newFriends
+                      friends: newFriends,
                     });
                     return true;
                   }),
-                error => {
+                (error) => {
                   console.log(error);
                 }
               );
@@ -95,133 +98,143 @@ class App extends Component {
       })
       .then(() => {
         fetch(`http://localhost:4000/getStocksDb`).then(
-          response =>
-            response.json().then(result => {
+          (response) =>
+            response.json().then((result) => {
               this.setState({ stocksDb: result });
             }),
-          error => {
+          (error) => {
+            console.log(error);
+          }
+        );
+      })
+      .then(() => {
+        fetch(`http://localhost:4000/getCompetitions`).then(
+          (response) =>
+            response.json().then((result) => {
+              console.log("All comps" + JSON.stringify(result, null, 2));
+              this.setState({ competitions: result });
+            }),
+          (error) => {
             console.log(error);
           }
         );
       });
   }
 
-  setBank = value => {
+  setBank = (value) => {
     this.setState({
       account: {
         ...this.state.account,
-        buyingpower: value.toFixed(2)
-      }
+        buyingpower: value.toFixed(2),
+      },
     });
 
     fetch("http://localhost:4000/updateBuyingPower/", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: this.state.account.username,
-        value: value
-      })
+        value: value,
+      }),
     });
   };
 
-  setName = name => {
+  setName = (name) => {
     this.setState({
       account: {
         ...this.state.account,
-        username: name
-      }
+        username: name,
+      },
     });
 
     fetch("http://localhost:4000/updateUsername/", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: this.state.account.userId,
-        name: name
-      })
+        name: name,
+      }),
     });
   };
 
-  setEmail = email => {
+  setEmail = (email) => {
     this.setState({
       account: {
         ...this.state.account,
-        emailaddress: email
-      }
+        emailaddress: email,
+      },
     });
 
     fetch("http://localhost:4000/updateEmail/", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: this.state.account.userId,
-        email: email
-      })
+        email: email,
+      }),
     });
   };
 
-  setPassword = password => {
+  setPassword = (password) => {
     this.setState({
       account: {
         ...this.state.account,
-        password: password
-      }
+        password: password,
+      },
     });
 
     fetch("http://localhost:4000/updatePassword/", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: this.state.account.userId,
-        password: password
-      })
+        password: password,
+      }),
     });
   };
 
-  transactStock = stockObj => {
+  transactStock = (stockObj) => {
     fetch("http://localhost:4000/transactStock/", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: this.state.account.userId,
         marketPrice: stockObj.marketPrice,
         shortName: stockObj.shortName,
         symbol: stockObj.symbol,
-        type: stockObj.type
-      })
+        type: stockObj.type,
+      }),
     }).then(() => {
       fetch(
         `http://localhost:4000/getTransactionsByUsernameId/${this.state.account.userId}`
       ).then(
-        response =>
-          response.json().then(result => {
+        (response) =>
+          response.json().then((result) => {
             this.setState({ transactions: result.reverse() });
           }),
-        error => {
+        (error) => {
           console.log(error);
         }
       );
     });
   };
 
-
   render() {
-    console.log(this.state.stocksDb);
     return (
       <div className="App">
         <MenuAppBar account={this.state.account} />
@@ -268,7 +281,15 @@ class App extends Component {
             path="/search-friends"
             component={() => <SearchFriends friends={this.state.friends} />}
           />
-          <Route path="/competition" component={Competition} />
+          <Route
+            path="/competition"
+            component={() => (
+              <Competition
+                competitions={this.state.competitions}
+                account={this.state.account}
+              />
+            )}
+          />
           <Route path="/chat" component={Chat} />
           <Route path="/bug" component={Bug} />
           <Route path="/Login" component={Login} />

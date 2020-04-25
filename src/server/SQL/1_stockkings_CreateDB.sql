@@ -30,6 +30,28 @@ DROP TABLE IF EXISTS STOCKNAMESLOOKUP;
 DROP TABLE IF EXISTS USERACCOUNT;
 DROP TABLE IF EXISTS TRANSACTIONS;
 DROP TABLE IF EXISTS STOCKS;
+DROP TABLE IF EXISTS COMPETITIONS;
+
+--
+-- Table structure for table `competitions`
+--
+
+CREATE TABLE IF NOT EXISTS `competitions` (
+  `CompetitionID` int(11) NOT NULL AUTO_INCREMENT,
+  `COMPETITION_START_DATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `COMPETITION_END_DATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`CompetitionID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `competitions`
+--
+
+INSERT INTO `competitions` (`CompetitionID`, `COMPETITION_END_DATE`) VALUES
+(1, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 24 HOUR)),
+(2, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 72 HOUR));
+
+-- --------------------------------------------------------
 
 -- --------------------------------------------------------
 
@@ -131,7 +153,9 @@ CREATE TABLE IF NOT EXISTS `useraccount` (
   `CREATE_DATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LAST_UPDATED_DATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `END_DATE` datetime DEFAULT NULL,
+  `COMPETITION_ID` int(11) NOT NULL,
   PRIMARY KEY (`UserID`),
+  KEY `COMPETITION_ID` (`COMPETITION_ID`),
   UNIQUE KEY `UserID` (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -139,10 +163,10 @@ CREATE TABLE IF NOT EXISTS `useraccount` (
 -- Dumping data for table `useraccount`
 --
 
-INSERT INTO `useraccount` (`UserID`, `Username`, `Password`, `EmailAddress`, `BuyingPower`, `CREATE_DATE`, `LAST_UPDATED_DATE`, `END_DATE`) VALUES
-(3, 'zimei', 'value-3', 'value-4', '2000', '2020-02-13 18:46:49', '2020-02-13 18:46:49', NULL),
-(4, 'ralph', 'value-3', 'value-4', '2000', '2020-02-20 18:39:29', '2020-02-20 18:39:29', NULL),
-(5, 'marko', 'value-3', 'value-4', '2000', '2020-02-20 18:39:36', '2020-03-05 18:06:42', NULL);
+INSERT INTO `useraccount` (`UserID`, `Username`, `Password`, `EmailAddress`, `BuyingPower`, `CREATE_DATE`, `LAST_UPDATED_DATE`, `END_DATE`, `COMPETITION_ID`) VALUES
+(3, 'zimei', 'value-3', 'value-4', '2000', '2020-02-13 18:46:49', '2020-02-13 18:46:49', NULL, 1),
+(4, 'ralph', 'value-3', 'value-4', '2000', '2020-02-20 18:39:29', '2020-02-20 18:39:29', NULL, 1),
+(5, 'marko', 'value-3', 'value-4', '2000', '2020-02-20 18:39:36', '2020-03-05 18:06:42', NULL, 2);
 
 --
 -- Table structure for table `transactions`
