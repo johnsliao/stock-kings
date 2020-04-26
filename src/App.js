@@ -28,11 +28,8 @@ class App extends Component {
       transactions: [],
       competitions: [],
       userCompeititons: [],
-      loggedIn: false,
     };
-  }
 
-  fetchData = () => {
     fetch("http://localhost:4000/getAccountByUsername/zimei")
       .then(
         (response) =>
@@ -122,7 +119,7 @@ class App extends Component {
           }
         );
       });
-  };
+  }
 
   setBank = (value) => {
     this.setState({
@@ -143,10 +140,6 @@ class App extends Component {
         value: value,
       }),
     });
-  };
-
-  setLogin = (value) => {
-    this.setState({ loggedIn: value });
   };
 
   setName = (name) => {
@@ -244,24 +237,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.loggedIn ? (
-          <MenuAppBar
-            account={this.state.account}
-            loggedIn={this.state.loggedIn}
-          />
-        ) : (
+        {window.location.href.includes("login") ? (
           ""
+        ) : (
+          <MenuAppBar account={this.state.account} />
         )}
 
         <Switch>
-          <Route
-            exact
-            path="/"
-            component={() => {
-              if (this.state.loggedIn) return <Announcement />;
-              return <Login setLogin={this.setLogin} />;
-            }}
-          />
+          <Route exact path="/" component={Announcement} />
+          <Route exact path="/login" component={Login} />
+          <Route path="/announcement" component={Announcement} />
           <Route path="/register" component={Register} />
           <Route
             path="/trade"

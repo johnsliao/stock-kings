@@ -33,7 +33,11 @@ class Login extends Component {
     ).then(
       (response) =>
         response.json().then((result) => {
-          this.props.setLogin(result.length !== 0);
+          if (result.length !== 0) {
+            window.location.href = "http://localhost:3000/announcement";
+          } else {
+            this.setState({ open: true });
+          }
         }),
       (error) => {
         console.log(error);
@@ -96,8 +100,8 @@ class Login extends Component {
           autoHideDuration={1000}
           onClose={this.handleClose}
         >
-          <Alert onClose={this.handleClose} severity="success">
-            Log in successfully!
+          <Alert onClose={this.handleClose} severity="error">
+            Invalid username/password!
           </Alert>
         </Snackbar>
       </div>
