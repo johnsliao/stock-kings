@@ -150,7 +150,8 @@ BEGIN
         from    forummessages f,
                 useraccount acc
         WHERE   f.UserID = acc.UserID
-        AND     TIMESTAMPDIFF(HOUR,CURRENT_TIMESTAMP,f.Create_Date) >= -2;
+        AND     TIMESTAMPDIFF(HOUR,CURRENT_TIMESTAMP,f.Create_Date) >= -2
+		ORDER BY f.Create_Date desc;
     SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
 END$$
 
