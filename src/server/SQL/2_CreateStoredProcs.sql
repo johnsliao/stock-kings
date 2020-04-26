@@ -136,3 +136,53 @@ END$$
 DELIMITER ;
 
 ALTER TABLE `useraccount` CHANGE `BuyingPower` `BuyingPower` DECIMAL(10,2) NOT NULL DEFAULT '2000.00';
+
+
+
+DROP procedure if exists `GetLatestForumMessages`;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetLatestForumMessages`()
+BEGIN
+    SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
+        select  acc.UserName as 'UserName',
+                f.message as 'Message'
+        from    forummessages f,
+                useraccount acc
+        WHERE   f.UserID = acc.UserID
+        AND     TIMESTAMPDIFF(HOUR,CURRENT_TIMESTAMP,f.Create_Date) >= -2;
+    SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
+END$$
+
+
+DROP procedure if exists `InsertForumMessage`;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertForumMessage`(IN userIDVar int, messageVar varchar(255))
+BEGIN
+ 	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
+  		INSERT INTO `forummessages` (UserID, message)
+		VALUES (userIDVar, messageVar);
+
+		CALL `GetLatestForumMessages`();
+	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;		
+END$$
+DELIMITER ;		
+
+
+
+
+DROP procedure if exists `UpdateBuyingPower`;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateBuyingPower`( IN userIdVar int, buyingPowerVar decimal(10,2))
+BEGIN
+ 	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
+		select 	acc.UserName as `UserName`,
+				f.message as 'Message'
+		from 	forummessages f,
+				useraccount acc
+		WHERE 	f.UserID = acc.UserID
+		AND 	TIMESTAMPDIFF(HOUR,GETDATE(),f.CreateDate) >= -2;
+  	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
+END$$

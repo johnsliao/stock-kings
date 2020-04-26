@@ -207,6 +207,30 @@ INSERT INTO `transactions` (`TransactionID`, `UserAccountID`, `PurchasePrice`, `
 
 
 
+-- chat table
+
+ CREATE TABLE IF NOT EXISTS `forummessages` (
+  `MessageID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `Message` varchar(255) NOT NULL,
+  `CREATE_DATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`MessageID`),
+  KEY `UserForeignKey` (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `forummessages`
+  ADD CONSTRAINT `UserForeignKey` FOREIGN KEY (`UserAccountID`) REFERENCES `useraccount` (`UserID`);
+COMMIT;
+
+INSERT INTO `forummessages` (`MessageID`, `UserID`, `Message`) VALUES
+(1, 3, 'Hello Stock Kings!'),
+(2, 5, 'Let''s win some fake $$$$!');
+
+
+
+
+
+
 -- --------------------------------------------------------
 
 

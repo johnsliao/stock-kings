@@ -238,6 +238,42 @@ app.post("/updateBuyingPowerWithProc/", function (req, res) {
   });
 });
 
+
+app.post("/insertForumMessage", function (req, res) {
+
+  console.log(req.body);
+  let userId = req.body.userId;
+  let message = req.body.message;
+
+  let query = " CALL `InsertForumMessage`("+ userId + ","+ message+");";
+
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+
+
+app.get("/getLatestForumMessage", function (req, res) {
+
+  let query = "CALL `GetLatestForumMessages`();";
+
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    console.log(result);
+    res.send(result);
+  });
+});
+
+
 //post method to retrive account info based on username and encrypted password
 app.post("/createUser/", function (req, res) {
   console.log(req.body);
