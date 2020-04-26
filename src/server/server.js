@@ -119,6 +119,17 @@ app.get("/getFriendsByUserId/:userId", function (req, res) {
   });
 });
 
+app.get("/login/:username/:password", function (req, res) {
+  let query = `SELECT * from \`useraccount\` where username='${req.params.username}' AND password='${req.params.password}'`;
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error :(");
+    }
+    res.send(result);
+  });
+});
+
 app.post("/updateBuyingPower/", function (req, res) {
   console.log(req.body.username);
   const query = `UPDATE \`useraccount\` SET \`BuyingPower\`=${req.body.value} where Username='${req.body.username}'`;

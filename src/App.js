@@ -28,8 +28,11 @@ class App extends Component {
       transactions: [],
       competitions: [],
       userCompeititons: [],
+      loggedIn: false,
     };
+  }
 
+  fetchData = () => {
     fetch("http://localhost:4000/getAccountByUsername/zimei")
       .then(
         (response) =>
@@ -119,7 +122,7 @@ class App extends Component {
           }
         );
       });
-  }
+  };
 
   setBank = (value) => {
     this.setState({
@@ -140,6 +143,10 @@ class App extends Component {
         value: value,
       }),
     });
+  };
+
+  setLogin = (value) => {
+    this.setState({ loggedIn: value });
   };
 
   setName = (name) => {
@@ -237,9 +244,24 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MenuAppBar account={this.state.account} />
+        {this.state.loggedIn ? (
+          <MenuAppBar
+            account={this.state.account}
+            loggedIn={this.state.loggedIn}
+          />
+        ) : (
+          ""
+        )}
+
         <Switch>
-          <Route exact path="/" component={Announcement} />
+          <Route
+            exact
+            path="/"
+            component={() => {
+              if (this.state.loggedIn) return <Announcement />;
+              return <Login setLogin={this.setLogin} />;
+            }}
+          />
           <Route path="/register" component={Register} />
           <Route
             path="/trade"
@@ -292,7 +314,6 @@ class App extends Component {
           />
           <Route path="/chat" component={Chat} />
           <Route path="/bug" component={Bug} />
-          <Route path="/Login" component={Login} />
         </Switch>
       </div>
     );

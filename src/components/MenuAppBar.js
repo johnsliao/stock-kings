@@ -24,28 +24,28 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
 }));
 
-const MenuAppBar = props => {
+const MenuAppBar = (props) => {
   const classes = useStyles();
 
   return (
@@ -65,7 +65,7 @@ const MenuAppBar = props => {
         className={classes.drawer}
         variant="permanent"
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}
       >
         <div className={classes.toolbar} />
@@ -120,18 +120,6 @@ const MenuAppBar = props => {
               <BugReportIcon />
             </ListItemIcon>
             <ListItemText primary="Report Bug" />
-          </ListItem>
-          <ListItem button component="a" href="/register">
-            <ListItemIcon>
-              <BuildIcon />
-            </ListItemIcon>
-            <ListItemText primary="Register" />
-          </ListItem>
-          <ListItem button component="a" href="/login">
-            <ListItemIcon>
-              <CheckBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Login" />
           </ListItem>
         </List>
       </Drawer>
