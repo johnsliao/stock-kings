@@ -42,6 +42,37 @@ RegisterButton.propTypes = {
 };
 
 class Register extends Component {
+  constructor(props) {
+  super(props);
+  this.state = {
+      UserName:'',
+      Email:'',
+      Password:'',
+      Confirm:'',
+  }
+  this.UserNameChange = this.UserNameChange.bind(this);
+  this.EmailChange = this.EmailChange.bind(this);
+  this.PasswordChange = this.PasswordChange.bind(this);
+  this.ConfirmChange = this.ConfirmChange.bind(this);
+  this.submit = this.submit.bind(this);
+}
+UserNameChange(e){
+  this.setState({ UserNameChange : e.target.value })
+}
+EmailChange(e){
+  this.setState({ EmailChange : e.target.value })
+}
+PasswordChange(e){
+  this.setState({ PasswordChange : e.target.value })
+}
+ConfirmChange(e){
+  this.setState({ ConfirmChange : e.target.value })
+}
+submit(){
+  window.alert(this.state.UserName)
+  window.alert(this.state.Email)
+  window.alert(this.state.Password)
+}
   render() {
     return (
       <div>
