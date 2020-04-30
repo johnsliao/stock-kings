@@ -71,6 +71,21 @@ ConfirmChange(e){
 submit(){
   window.alert('Success!')
 }
+HandleRegister() {
+
+  window.alert('Success!')
+  fetch("http://localhost:4000/createUser/", {
+  method: "POST",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    username: this.state.UserName,
+    password: this.state.Password,
+    email: this.state.Email
+  }),
+  })}
   render() {
     return (
       <div>
@@ -126,7 +141,7 @@ submit(){
         </CancelButton>
         <RegisterButton color="blue"
                         style={{minWidth: "140px", maxWidth: "140px"}}
-                        onClick={this.submit}
+                        onClick={this.HandleRegister}
         >
         Next
         </RegisterButton>
