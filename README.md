@@ -4,6 +4,8 @@ Final Report - Iteration 3
 Boston University Term Project - CS673
 Team 5
 
+![alt text](screenshot.png)
+
 ## Executive Summary
 
 The term project is considered successful as a minimum viable product. As a team we were able to build a product that demonstrates basic sets of capabilities to buy, sell and track the stock market changes with live market data using the Yahoo API. All transaction data is stored in a persistent database and is presented to the user in a clean and intuitive interface.
